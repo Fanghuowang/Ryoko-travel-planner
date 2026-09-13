@@ -4,8 +4,7 @@
 
 **Team:** Tan Hock Lai, Yuen Ming Kit, Bryan Tiong You Pheng  
 **Problem Statement:** Travel Planner  
-**Video Presentation:** [Unlisted Youtube Link]
-
+**Video Presentation:** [Watch Video Presentation](https://youtu.be/q_wlVYhsmrU)
 </div>
 
 <hr/>
