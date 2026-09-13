@@ -267,8 +267,8 @@ Ryokō is an all-in-one trip planning platform that helps travelers plan, budget
 ## 3. Design & Prototype
 
 **UI Prototype:** https://ryoko-travel-planner.vercel.app/
-<br>
-**[View Prototype screenshots and descriptions Here](./Prtototype%20screenshots%20and%20description.pdf)**
+<br><br>
+**[View screenshots and descriptions here](./Prtototype%20screenshots%20and%20description.pdf)**
 ---
 
 ## 4. What Makes It Different
