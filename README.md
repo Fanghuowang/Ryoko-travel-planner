@@ -29,7 +29,7 @@ Travel planning is plagued by structural inefficiencies, fragmented tool ecosyst
 * <strong>Solo Travelers:</strong> Depend entirely on self-sufficiency, requiring flexible planning alongside robust safety backups. Critical needs include real-time schedule adaptations when plans break down and immediate support during emergency situations.
 
 #### Secondary Stakeholders
-* <strong>Family & Emergency Contacts:</strong> Require automated transit updates, live location sharing, and daily photo check-ins for peace of mind. Consistent, low-effort reassurance ensures families stay informed about traveler safety and well-being without constant calls.
+* <strong>Family & Emergency Contacts:</strong> Require automated transit updates, live location sharing, and daily photo check-ins from teenagers aging between 18-25 for the peace of mind. Consistent, low-effort reassurance ensures families stay informed about traveler safety and well-being without constant calls.
 
 ---
 
