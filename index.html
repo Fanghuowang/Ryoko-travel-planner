@@ -94,7 +94,6 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.35);
     }
 
-    /* ============ MOTION SYSTEM ============ */
     @keyframes slideUpSheet {
       from { transform: translateY(100%); }
       to { transform: translateY(0); }
@@ -177,11 +176,13 @@
 
     #community-inspector-modal .modal-sheet,
     #create-trip-modal .modal-sheet,
-    #montage-reel-modal .modal-sheet {
+    #montage-reel-modal .modal-sheet,
+    #join-trip-modal .modal-sheet {
       animation: slideUpSheet 380ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     #community-inspector-modal .modal-backdrop,
-    #create-trip-modal .modal-backdrop {
+    #create-trip-modal .modal-backdrop,
+    #join-trip-modal .modal-backdrop {
       animation: fadeInBackdrop 240ms ease-out;
     }
 
@@ -213,7 +214,6 @@
 <body>
 
 <div id="mobile-viewport">
-  <!-- Status Bar -->
   <div class="w-full pt-3 px-6 pb-2 flex justify-between items-center z-50 bg-transparent shrink-0 select-none">
     <span class="text-xs font-bold text-neutral-800 tracking-tight">09:41</span>
     <div class="w-28 h-5 bg-black rounded-full flex items-center justify-center space-x-1.5 px-2">
@@ -227,7 +227,6 @@
     </div>
   </div>
 
-  <!-- 1. WELCOME VIEW -->
   <div id="view-welcome" class="screen-panel flex-1 p-5 pb-6 bg-surface flex-col justify-between overflow-y-auto hide-scrollbar">
     <div class="pt-1 flex items-center justify-center">
       <img src="https://lh3.googleusercontent.com/aida/AEtjO1UC6k1xkla5TZHXUwCte-UdSqAXqruCIMqPR64f1pAvSJMZpqWGAZrODPrgx2LWuai_wmzBh1ab8SdkP0aq5cQApfrj5i5J_xB4tnchpcPSZzUcv4-Mu8lrAij2OYUglcJUJsKWXuwil_acONI3saP-eqgcXoTqgu2Ocwavc5_nEucFbQ52rlE7yicTaQGVjkxo9eHgvCkC-8znK3OJJfMXfT8zbIH81Pv80sTUch_sxrDn6PO7ApR60IBq" alt="Ryoko Crest" class="w-16 h-16 rounded-full shadow-sm">
@@ -265,7 +264,6 @@
     </div>
   </div>
 
-  <!-- 2. REGISTRATION VIEW -->
   <div id="view-register" class="screen-panel flex-1 p-5 pb-6 bg-surface overflow-y-auto hide-scrollbar">
     <div class="flex items-center justify-between pb-3 border-b border-neutral-200 sticky top-0 bg-surface/95 backdrop-blur z-20">
       <button onclick="navigateTo('view-welcome')" class="w-8 h-8 rounded-full bg-white border border-neutral-200 flex items-center justify-center text-neutral-700 shadow-xs" aria-label="Back">
@@ -369,7 +367,6 @@
     </div>
   </div>
 
-  <!-- 3. TRIPS TAB -->
   <div id="view-trips" class="screen-panel flex-1 pb-16 bg-surface overflow-y-auto hide-scrollbar">
     <div class="px-5 py-3 border-b border-neutral-200 bg-white/95 backdrop-blur sticky top-0 z-20 flex justify-between items-center">
       <div>
@@ -385,6 +382,11 @@
       <button onclick="openCreateTripModal()" class="btn-sweep w-full py-3 bg-gradient-to-r from-primary to-primary-dark text-white rounded-2xl font-bold text-xs shadow-md flex items-center justify-center space-x-1.5 active:scale-[0.99]">
         <span class="material-symbols-outlined text-sm">add_circle</span>
         <span>Create New Trip / Expedition</span>
+      </button>
+
+      <button onclick="openJoinTripModal()" class="btn-sweep w-full py-3 bg-white hover:bg-neutral-50 border-2 border-primary text-primary rounded-2xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1.5 active:scale-[0.99]">
+        <span class="material-symbols-outlined text-sm">group_add</span>
+        <span>Join Trip with Code</span>
       </button>
 
       <div onclick="openTripHub('kyoto')" class="bg-white border-2 border-primary/40 rounded-3xl p-4 shadow-sm cursor-pointer relative hover:border-primary transition-all lift-on-hover">
@@ -424,7 +426,6 @@
     </div>
   </div>
 
-  <!-- 4. COMMUNITY TAB -->
   <div id="view-community" class="screen-panel flex-1 pb-16 bg-surface overflow-y-auto hide-scrollbar">
     <div class="px-5 py-3 flex items-center justify-between border-b border-neutral-200 bg-white/95 backdrop-blur sticky top-0 z-20">
       <div class="flex items-center space-x-2">
@@ -477,9 +478,7 @@
       </div>
     </div>
   </div>
-
-  <!-- 5. TRIP HUB -->
-  <div id="view-trip-hub" class="screen-panel flex-1 bg-surface relative overflow-hidden flex flex-col">
+    <div id="view-trip-hub" class="screen-panel flex-1 bg-surface relative overflow-hidden flex flex-col">
     <div class="px-4 py-2 bg-white border-b border-neutral-200 flex items-center justify-between shrink-0">
       <button onclick="navigateTo('view-trips')" class="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-700 shadow-xs" aria-label="Back to Trips">
         <span class="material-symbols-outlined text-[16px]">arrow_back</span>
@@ -498,7 +497,6 @@
       <button id="hub-tab-safety" onclick="switchHubTool('safety')" class="flex-1 py-1.5 rounded-xl text-[10px] font-bold text-neutral-500 transition-all">🛡️ Safety</button>
     </div>
 
-    <!-- TOOL 1: DECIDE -->
     <div id="hub-pane-decide" class="flex-1 flex flex-col p-3.5 overflow-hidden min-h-0">
       <div id="deck-active-container" class="flex-1 flex flex-col min-h-0">
         <div class="flex justify-between items-center px-1 text-xs shrink-0 mb-2">
@@ -509,12 +507,8 @@
         <div class="relative w-full h-[370px] my-auto flex items-center justify-center select-none touch-none">
           <div id="swipe-card" class="w-full h-full bg-white rounded-3xl shadow-lg border border-neutral-200 overflow-hidden flex flex-col justify-between relative">
             <div id="card-bg-image" class="relative h-[230px] bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida/AEtjO1V9UMo51Ixi0743hcV17TXv9Cme59YUa-9hPFhsRNMkrOo981INp4e2Eij_QpZ_f5Oy0_QvhoogxsRyV-7AIHR074wovHPx9h0kHjJRyWKvfMJaXeUIuSYe50pGqjk9QxjQUl-xOgC8IeS9UP_wYpN9qXmfMkkuSkbb3j1QWLcb8F8BTYKw10h2u_j_TIvaeWnish9y64NRDg77rlMwnM-Qkqqc3Ao4adoTgb0miMyZ3b1OwwUVzuoGwTkM');">
-              <div id="stamp-like" class="stamp-badge absolute top-4 left-4 border-4 border-tertiary text-tertiary font-black text-xl px-3 py-1 rounded-xl -rotate-12 uppercase bg-black/60 shadow-lg tracking-wider">
-                LIKE ❤️
-              </div>
-              <div id="stamp-nope" class="stamp-badge absolute top-4 right-4 border-4 border-primary text-primary font-black text-xl px-3 py-1 rounded-xl rotate-12 uppercase bg-black/60 shadow-lg tracking-wider">
-                NOPE ✕
-              </div>
+              <div id="stamp-like" class="stamp-badge absolute top-4 left-4 border-4 border-tertiary text-tertiary font-black text-xl px-3 py-1 rounded-xl -rotate-12 uppercase bg-black/60 shadow-lg tracking-wider">LIKE ❤️</div>
+              <div id="stamp-nope" class="stamp-badge absolute top-4 right-4 border-4 border-primary text-primary font-black text-xl px-3 py-1 rounded-xl rotate-12 uppercase bg-black/60 shadow-lg tracking-wider">NOPE ✕</div>
               <div class="absolute bottom-2.5 inset-x-2.5 bg-black/70 backdrop-blur-xs rounded-xl p-2 text-white">
                 <div class="flex justify-between items-center">
                   <span id="card-tag" class="text-[8.5px] uppercase font-bold text-amber-300">🎋 Nature • Arashiyama</span>
@@ -523,11 +517,8 @@
                 <h4 id="card-name" class="font-serif font-bold text-sm leading-tight mt-0.5">Arashiyama Bamboo Grove</h4>
               </div>
             </div>
-
             <div class="p-3 flex-1 flex flex-col justify-between text-xs">
-              <p id="card-desc" class="text-[10.5px] text-neutral-600 leading-relaxed">
-                Towering emerald bamboo groves with morning soft sunlight and peaceful temple chimes.
-              </p>
+              <p id="card-desc" class="text-[10.5px] text-neutral-600 leading-relaxed">Towering emerald bamboo groves with morning soft sunlight and peaceful temple chimes.</p>
               <div class="flex items-center justify-between pt-1 border-t border-neutral-100 text-[9.5px]">
                 <span id="card-consensus-label" class="text-neutral-500">Group consensus: <strong id="card-votes" class="text-neutral-900">4/4 Liked</strong></span>
                 <span id="card-fit-label" class="text-tertiary font-bold bg-tertiary-subtle px-1.5 py-0.5 rounded">100% Fit</span>
@@ -537,28 +528,18 @@
         </div>
 
         <div class="flex items-center justify-center space-x-6 pt-3 pb-8 shrink-0">
-          <button onclick="triggerCardAction('left')" class="w-14 h-14 rounded-full bg-white border-2 border-primary/40 text-primary shadow-md flex items-center justify-center text-2xl active:scale-90 hover:bg-primary hover:text-white transition-all" aria-label="Skip">
-            ✕
-          </button>
-          <button onclick="showConsensusDirectly()" class="text-[10px] text-neutral-400 font-bold hover:text-primary underline">
-            Skip to Results
-          </button>
-          <button onclick="triggerCardAction('right')" class="w-14 h-14 rounded-full bg-primary hover:bg-primary-dark text-white shadow-lg shadow-primary/30 flex items-center justify-center text-2xl active:scale-90 transition-all anim-pulse-glow" aria-label="Like">
-            ♥
-          </button>
+          <button onclick="triggerCardAction('left')" class="w-14 h-14 rounded-full bg-white border-2 border-primary/40 text-primary shadow-md flex items-center justify-center text-2xl active:scale-90 hover:bg-primary hover:text-white transition-all" aria-label="Skip">✕</button>
+          <button onclick="showConsensusDirectly()" class="text-[10px] text-neutral-400 font-bold hover:text-primary underline">Skip to Results</button>
+          <button onclick="triggerCardAction('right')" class="w-14 h-14 rounded-full bg-primary hover:bg-primary-dark text-white shadow-lg shadow-primary/30 flex items-center justify-center text-2xl active:scale-90 transition-all anim-pulse-glow" aria-label="Like">♥</button>
         </div>
       </div>
 
-      <!-- CONSENSUS VIEW -->
       <div id="deck-consensus-container" class="hidden flex-1 flex flex-col min-h-0 pb-2">
         <div class="text-center pt-1 shrink-0 anim-pop-in">
           <span class="text-3xl">🎉</span>
           <h3 id="consensus-title" class="font-serif font-bold text-neutral-900 text-sm mt-1">Final Consensus Locked</h3>
-          <p id="consensus-subtitle" class="text-[10px] text-neutral-500">
-            <span class="text-tertiary font-bold">All 4 companions voted</span> · Your picks finalize the trip
-          </p>
+          <p id="consensus-subtitle" class="text-[10px] text-neutral-500"><span class="text-tertiary font-bold">All 4 companions voted</span> · Your picks finalize the trip</p>
         </div>
-
         <div id="deck-tally" class="shrink-0 bg-tertiary-subtle border border-tertiary/30 rounded-2xl p-2.5 flex items-center justify-between text-[11px] my-2 anim-fade-up">
           <div class="flex items-center space-x-2">
             <span class="material-symbols-outlined text-tertiary text-base">how_to_vote</span>
@@ -569,9 +550,7 @@
             <span id="tally-skipped" class="bg-neutral-200 text-neutral-600 font-bold text-[10px] px-2 py-0.5 rounded-full">0 removed</span>
           </div>
         </div>
-
         <div id="deck-results-list" class="flex-1 overflow-y-auto hide-scrollbar space-y-1.5 text-xs pb-3 min-h-0"></div>
-
         <div class="shrink-0 pt-3 pb-6 mb-4">
           <button onclick="switchHubTool('map')" class="btn-sweep w-full py-3.5 bg-primary hover:bg-primary-dark text-white font-bold text-xs rounded-2xl shadow-lg shadow-primary/25 flex items-center justify-center space-x-1.5 active:scale-[0.99] transition-all anim-pulse-glow">
             <span>Proceed to Interactive Map &amp; AI Itinerary</span>
@@ -582,7 +561,6 @@
       </div>
     </div>
 
-    <!-- TOOL 2: MAP & AI -->
     <div id="hub-pane-map" class="flex-1 p-3 overflow-y-auto hidden space-y-2.5 hide-scrollbar relative pb-4">
       <div class="flex space-x-1 bg-neutral-100 p-1 rounded-xl text-[10px] font-bold text-center">
         <button class="flex-1 py-1 rounded-lg text-neutral-500">Day 1 (Oct 14)</button>
@@ -592,12 +570,10 @@
 
       <div class="relative h-64 rounded-2xl overflow-hidden border border-neutral-300 shadow-md anim-fade-up">
         <div id="leaflet-map-canvas" class="w-full h-full relative z-0"></div>
-
         <div class="absolute top-2 left-2 z-10 bg-white/95 backdrop-blur text-neutral-900 text-[8.5px] font-bold px-2 py-1 rounded-lg shadow-sm flex items-center space-x-1.5 border border-neutral-200">
           <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
           <span>Kyoto Higashiyama Live Route</span>
         </div>
-
         <div class="absolute top-2 right-2 z-10 flex gap-1">
           <button onclick="toggleMapLayerStyle()" class="bg-white/95 backdrop-blur text-neutral-800 text-[8.5px] font-bold px-2 py-1 rounded-lg shadow-md border border-neutral-200 hover:bg-neutral-50 active:scale-95 transition-all flex items-center space-x-1">
             <span class="material-symbols-outlined text-[11px] text-primary">layers</span>
@@ -608,7 +584,6 @@
             <span>Fit Route</span>
           </button>
         </div>
-
         <div class="absolute bottom-2 left-2 z-10 bg-[#1A73E8] text-white text-[8px] font-bold px-2.5 py-0.5 rounded-full shadow-md flex items-center space-x-1">
           <span class="material-symbols-outlined text-[10px]">directions_walk</span>
           <span>3 Stops • Pan &amp; Zoom Interactive</span>
@@ -629,9 +604,7 @@
             </div>
             <h4 class="font-serif font-bold text-neutral-900 text-sm leading-tight mt-1">1. Arashiyama Bamboo Grove &amp; Tenryu-ji</h4>
           </div>
-          <p class="text-[11px] text-neutral-600 leading-relaxed">
-            Towering emerald bamboo canopies filtered by early morning sunlight. The walking path meanders directly through the World Heritage Tenryu-ji Sogenchi dry landscape pond garden with tranquil mountain backdrops.
-          </p>
+          <p class="text-[11px] text-neutral-600 leading-relaxed">Towering emerald bamboo canopies filtered by early morning sunlight. The walking path meanders directly through the World Heritage Tenryu-ji Sogenchi dry landscape pond garden with tranquil mountain backdrops.</p>
           <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
             <span class="text-[9px] bg-neutral-100 text-neutral-700 font-medium px-2 py-0.5 rounded-md">⏳ 2h 30m visit</span>
             <span class="text-[9px] bg-neutral-100 text-neutral-700 font-medium px-2 py-0.5 rounded-md">🎟️ Free Entry</span>
@@ -657,9 +630,7 @@
             </div>
             <h4 class="font-serif font-bold text-neutral-900 text-sm leading-tight mt-1">2. Honke Owariya Soba Feast</h4>
           </div>
-          <p class="text-[11px] text-neutral-600 leading-relaxed">
-            550-year-old historic culinary institution serving delicate handmade buckwheat soba in traditional tatami rooms. Verified peanut-allergy safe; automated RM fair-split bill ready in Budget.
-          </p>
+          <p class="text-[11px] text-neutral-600 leading-relaxed">550-year-old historic culinary institution serving delicate handmade buckwheat soba in traditional tatami rooms. Verified peanut-allergy safe; automated RM fair-split bill ready in Budget.</p>
           <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
             <span class="text-[9px] bg-neutral-100 text-neutral-700 font-medium px-2 py-0.5 rounded-md">⏳ 1h 45m lunch</span>
             <span class="text-[9px] bg-neutral-100 text-neutral-700 font-medium px-2 py-0.5 rounded-md">💰 ~RM 108 / pax</span>
@@ -685,9 +656,7 @@
             </div>
             <h4 class="font-serif font-bold text-neutral-900 text-sm leading-tight mt-1">3. Kyoto Museum &amp; Zen Tea Tatami Pavilion</h4>
           </div>
-          <p class="text-[11px] text-neutral-600 leading-relaxed">
-            Private traditional tea master whisking ceremonial Uji matcha overlooking serene dry stone gardens. Completely rain-safe cultural retreat with group tatami reservations.
-          </p>
+          <p class="text-[11px] text-neutral-600 leading-relaxed">Private traditional tea master whisking ceremonial Uji matcha overlooking serene dry stone gardens. Completely rain-safe cultural retreat with group tatami reservations.</p>
           <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
             <span class="text-[9px] bg-neutral-100 text-neutral-700 font-medium px-2 py-0.5 rounded-md">⏳ 2h duration</span>
             <span class="text-[9px] bg-neutral-100 text-neutral-700 font-medium px-2 py-0.5 rounded-md">💰 RM 45 / pax</span>
@@ -701,7 +670,6 @@
       </div>
     </div>
 
-    <!-- TOOL 3: BUDGET -->
     <div id="hub-pane-budget" class="flex-1 p-3.5 overflow-y-auto hidden space-y-3 hide-scrollbar">
       <div class="bg-gradient-to-br from-primary to-primary-dark text-white p-4 rounded-3xl shadow-md space-y-2.5 anim-fade-up">
         <div class="flex justify-between items-center">
@@ -809,9 +777,7 @@
       </div>
     </div>
 
-    <!-- TOOL 4: SAFETY -->
     <div id="hub-pane-safety" class="flex-1 flex flex-col p-3 overflow-hidden hidden min-h-0 pb-6">
-
       <div class="bg-white p-2 rounded-2xl border border-neutral-200 flex items-center justify-between shrink-0 shadow-xs mb-2 anim-fade-up">
         <div class="flex-1 min-w-0">
           <div class="flex items-center space-x-1.5">
@@ -820,9 +786,7 @@
           </div>
           <span class="text-[8.5px] text-neutral-500 font-mono block truncate">35.0037° N, 135.7772° E</span>
         </div>
-        <button onclick="document.getElementById('gps-permission-dialog').classList.remove('hidden')" class="btn-sweep bg-primary hover:bg-primary-dark text-white text-[9px] font-bold px-2.5 py-1 rounded-lg shadow-xs shrink-0 ml-2">
-          📍 Push
-        </button>
+        <button onclick="document.getElementById('gps-permission-dialog').classList.remove('hidden')" class="btn-sweep bg-primary hover:bg-primary-dark text-white text-[9px] font-bold px-2.5 py-1 rounded-lg shadow-xs shrink-0 ml-2">📍 Push</button>
       </div>
 
       <div class="bg-primary/5 p-1.5 rounded-2xl border border-primary/20 shrink-0 mb-2 anim-fade-up">
@@ -838,12 +802,9 @@
       </div>
 
       <div class="flex-1 min-h-0 bg-amber-50/40 rounded-2xl border border-neutral-200 flex flex-col overflow-hidden mb-3">
-
         <div id="guardian-chat-messages" class="flex-1 overflow-y-auto p-2.5 space-y-2 text-xs hide-scrollbar">
           <div class="text-center">
-            <span class="bg-white border border-neutral-200 text-neutral-500 text-[8.5px] px-2.5 py-0.5 rounded-full font-medium inline-block anim-fade-up">
-              🔒 Encrypted family link active
-            </span>
+            <span class="bg-white border border-neutral-200 text-neutral-500 text-[8.5px] px-2.5 py-0.5 rounded-full font-medium inline-block anim-fade-up">🔒 Encrypted family link active</span>
           </div>
           <div class="flex items-start space-x-1.5 max-w-[85%] anim-bubble-in">
             <div class="w-6 h-6 rounded-full bg-amber-200 text-amber-900 text-[9px] font-bold flex items-center justify-center shrink-0">MT</div>
@@ -863,43 +824,26 @@
         </div>
 
         <div class="border-t border-neutral-200 bg-white p-2 pb-4 space-y-1.5 shrink-0">
-
           <div class="flex items-center space-x-1 overflow-x-auto hide-scrollbar">
             <button onclick="triggerSelfieUpload()" class="btn-sweep shrink-0 bg-primary text-white text-[9.5px] font-bold px-2.5 py-1 rounded-full flex items-center space-x-1 shadow-xs active:scale-95 transition-all">
               <span class="material-symbols-outlined text-[12px]">photo_camera</span>
               <span>Send Selfie</span>
             </button>
-            <button onclick="quickSendMessage('Reached safely ✅')" class="shrink-0 bg-primary-subtle text-primary border border-primary/30 text-[9.5px] font-bold px-2.5 py-1 rounded-full active:scale-95 transition-all">
-              ✅ Reached
-            </button>
-            <button onclick="quickSendMessage('Running late, all good!')" class="shrink-0 bg-primary-subtle text-primary border border-primary/30 text-[9.5px] font-bold px-2.5 py-1 rounded-full active:scale-95 transition-all">
-              ⏰ Late
-            </button>
-            <button onclick="quickSendMessage('Heading out 🚶')" class="shrink-0 bg-primary-subtle text-primary border border-primary/30 text-[9.5px] font-bold px-2.5 py-1 rounded-full active:scale-95 transition-all">
-              🚶 Out
-            </button>
+            <button onclick="quickSendMessage('Reached safely ✅')" class="shrink-0 bg-primary-subtle text-primary border border-primary/30 text-[9.5px] font-bold px-2.5 py-1 rounded-full active:scale-95 transition-all">✅ Reached</button>
+            <button onclick="quickSendMessage('Running late, all good!')" class="shrink-0 bg-primary-subtle text-primary border border-primary/30 text-[9.5px] font-bold px-2.5 py-1 rounded-full active:scale-95 transition-all">⏰ Late</button>
+            <button onclick="quickSendMessage('Heading out 🚶')" class="shrink-0 bg-primary-subtle text-primary border border-primary/30 text-[9.5px] font-bold px-2.5 py-1 rounded-full active:scale-95 transition-all">🚶 Out</button>
           </div>
-
           <div class="flex items-center space-x-1.5">
-            <input
-              type="text"
-              id="guardian-chat-input"
-              onkeypress="if(event.key==='Enter'){ event.preventDefault(); sendGuardianChatMessage(); }"
-              placeholder="Type a message..."
-              class="flex-1 bg-neutral-50 border border-neutral-200 rounded-full px-3 py-2 text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
-              autocomplete="off">
+            <input type="text" id="guardian-chat-input" onkeypress="if(event.key==='Enter'){ event.preventDefault(); sendGuardianChatMessage(); }" placeholder="Type a message..." class="flex-1 bg-neutral-50 border border-neutral-200 rounded-full px-3 py-2 text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" autocomplete="off">
             <button onclick="sendGuardianChatMessage()" class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shrink-0 shadow-xs active:scale-95 transition-all" aria-label="Send message">
               <span class="material-symbols-outlined text-sm">send</span>
             </button>
           </div>
-
         </div>
-
       </div>
     </div>
   </div>
 
-  <!-- ================= AI CHATBOT FAB (OUTSIDE SCROLL) ================= -->
   <div id="ai-fab-wrapper" class="absolute inset-0 pointer-events-none z-40 hidden">
     <button id="ai-chat-fab" onclick="toggleAiDrawer(true)" class="pointer-events-auto absolute bottom-20 right-4 bg-gradient-to-r from-primary to-primary-dark text-white font-bold text-xs px-3.5 py-2.5 rounded-full shadow-2xl flex items-center space-x-2 active:scale-95 hover:shadow-primary/40 transition-all border border-white/30 cursor-pointer anim-pulse-glow">
       <span class="relative flex h-2.5 w-2.5">
@@ -911,10 +855,7 @@
     </button>
   </div>
 
-  <!-- AI Drawer with TEXTBOX input -->
   <div id="hub-ai-drawer" class="absolute inset-x-4 bottom-20 bg-white rounded-3xl border border-neutral-300 shadow-2xl p-3.5 z-50 hidden flex flex-col space-y-2 max-w-[380px] mx-auto pointer-events-auto">
-
-    <!-- Header -->
     <div class="flex items-center justify-between border-b border-neutral-100 pb-1.5 shrink-0">
       <div class="flex items-center space-x-1.5">
         <div class="w-6 h-6 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center shadow-xs">AI</div>
@@ -928,8 +869,6 @@
       </div>
       <button onclick="toggleAiDrawer(false)" class="w-6 h-6 rounded-full bg-neutral-100 text-neutral-500 font-bold text-xs flex items-center justify-center hover:bg-neutral-200" aria-label="Close">✕</button>
     </div>
-
-    <!-- Messages -->
     <div id="ai-chat-messages" class="bg-neutral-50 rounded-xl p-2.5 space-y-1.5 max-h-48 overflow-y-auto text-xs hide-scrollbar border border-neutral-100">
       <div class="flex items-start space-x-1.5 max-w-[90%]">
         <div class="w-5 h-5 rounded-full bg-primary text-white text-[8px] font-bold flex items-center justify-center shrink-0">AI</div>
@@ -938,36 +877,19 @@
         </div>
       </div>
     </div>
-
-    <!-- Quick chips -->
     <div class="flex space-x-1.5 overflow-x-auto hide-scrollbar pt-0.5 text-[9.5px] shrink-0">
       <button onclick="sendAiCopilotPrompt('rain')" class="shrink-0 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-semibold px-2.5 py-1.5 rounded-lg border border-neutral-200">🌧️ Reschedule for rain</button>
       <button onclick="sendAiCopilotPrompt('food')" class="shrink-0 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-semibold px-2.5 py-1.5 rounded-lg border border-neutral-200">🍜 Add food spots</button>
       <button onclick="sendAiCopilotPrompt('walk')" class="shrink-0 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-semibold px-2.5 py-1.5 rounded-lg border border-neutral-200">⚡ Less walking</button>
     </div>
-
-    <!-- NEW: Chat Textbox -->
     <div class="flex items-center space-x-1.5 pt-1.5 border-t border-neutral-100 shrink-0">
-      <input
-        type="text"
-        id="ai-chat-input"
-        onkeypress="if(event.key==='Enter'){ event.preventDefault(); sendAiUserMessage(); }"
-        placeholder="Ask or update anything..."
-        class="flex-1 bg-neutral-50 border border-neutral-200 rounded-full px-3 py-2 text-[11px] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
-        autocomplete="off">
-      <button
-        onclick="sendAiUserMessage()"
-        class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shrink-0 shadow-xs active:scale-95 transition-all"
-        aria-label="Send message">
+      <input type="text" id="ai-chat-input" onkeypress="if(event.key==='Enter'){ event.preventDefault(); sendAiUserMessage(); }" placeholder="Ask or update anything..." class="flex-1 bg-neutral-50 border border-neutral-200 rounded-full px-3 py-2 text-[11px] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" autocomplete="off">
+      <button onclick="sendAiUserMessage()" class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center shrink-0 shadow-xs active:scale-95 transition-all" aria-label="Send message">
         <span class="material-symbols-outlined text-sm">send</span>
       </button>
     </div>
-
   </div>
 
-  <!-- ================= MODALS ================= -->
-
-  <!-- CREATE TRIP MODAL -->
   <div id="create-trip-modal" class="absolute inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex flex-col justify-end select-none">
     <div class="modal-backdrop absolute inset-0" onclick="closeCreateTripModal()"></div>
     <div class="modal-sheet relative bg-surface w-full h-[92%] rounded-t-[32px] overflow-hidden flex flex-col shadow-2xl">
@@ -990,6 +912,49 @@
           </div>
         </div>
 
+        <div id="invite-code-section" class="bg-white p-3.5 rounded-2xl border-2 border-primary/40 shadow-xs space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-serif font-bold text-neutral-900 text-xs flex items-center">
+              <span class="material-symbols-outlined text-primary text-sm mr-1">group_add</span>
+              Invite Your Travel Crew
+            </span>
+            <span class="text-[8.5px] bg-tertiary-subtle text-tertiary font-bold px-2 py-0.5 rounded-full">Group Mode</span>
+          </div>
+          <div class="bg-primary-subtle/50 border border-primary/30 rounded-2xl p-3 space-y-2">
+            <span class="text-[9px] uppercase font-bold text-neutral-500 block text-center">Your Unique Invite Code</span>
+            <div class="flex items-center justify-center space-x-2">
+              <span id="trip-invite-code" class="font-mono font-black text-2xl text-primary tracking-[0.3em] select-all">RYOKO-482</span>
+            </div>
+            <div class="flex space-x-1.5 pt-1">
+              <button type="button" onclick="copyInviteCode()" class="flex-1 py-2 bg-white border border-primary/40 text-primary font-bold text-[10.5px] rounded-xl hover:bg-primary hover:text-white transition-all flex items-center justify-center space-x-1">
+                <span class="material-symbols-outlined text-[13px]">content_copy</span>
+                <span id="copy-btn-label">Copy Code</span>
+              </button>
+              <button type="button" onclick="shareInviteCode()" class="flex-1 py-2 bg-primary text-white font-bold text-[10.5px] rounded-xl shadow-xs hover:bg-primary-dark transition-all flex items-center justify-center space-x-1">
+                <span class="material-symbols-outlined text-[13px]">share</span>
+                <span>Share Link</span>
+              </button>
+            </div>
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-[9px] font-bold uppercase text-neutral-400 block">Or invite directly</label>
+            <div class="flex space-x-1.5">
+              <input type="text" id="invite-by-input" placeholder="Email or username..." class="flex-1 px-2.5 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20">
+              <button type="button" onclick="sendDirectInvite()" class="bg-primary text-white text-[10.5px] font-bold px-3 py-2 rounded-xl shrink-0 hover:bg-primary-dark transition-all">Invite</button>
+            </div>
+            <div id="invited-list" class="space-y-1 pt-1"></div>
+          </div>
+          <div class="pt-2 border-t border-neutral-100">
+            <span class="text-[9px] uppercase font-bold text-neutral-500 block mb-1.5">Travel Crew (1 joined)</span>
+            <div class="flex items-center space-x-2">
+              <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-amber-300 border-2 border-white flex items-center justify-center text-[8px] font-bold text-amber-900">J</div>
+              </div>
+              <span class="text-[10px] text-neutral-500">Waiting for friends to join...</span>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-white p-3 rounded-2xl border border-neutral-200 shadow-xs space-y-2">
           <span class="font-serif font-bold text-neutral-900 text-xs flex items-center">
             <span class="material-symbols-outlined text-primary text-sm mr-1">pin_drop</span>
@@ -1000,24 +965,21 @@
 
         <div class="bg-white p-3.5 rounded-2xl border border-neutral-200 shadow-xs space-y-2.5">
           <div class="flex justify-between items-center">
-            <span class="font-serif font-bold text-neutral-900 text-xs">3. Queue Spots to Swipe Deck (3 Ways)</span>
+            <span class="font-serif font-bold text-neutral-900 text-xs">3. Queue Spots to Swipe Deck</span>
             <span id="deck-queued-badge" class="text-[9px] bg-primary/10 text-primary font-bold px-2 py-0.5 rounded-full">4 queued</span>
           </div>
-
           <div class="flex border-b border-neutral-200 text-[10px]">
             <button id="cup-tab-1" onclick="switchCreateUploader(1)" class="flex-1 pb-1.5 border-b-2 border-primary text-primary font-bold">1. Search &amp; DB</button>
-            <button id="cup-tab-2" onclick="switchCreateUploader(2)" class="flex-1 pb-1.5 text-neutral-400 font-medium">2. RED / IG Links</button>
+            <button id="cup-tab-2" onclick="switchCreateUploader(2)" class="flex-1 pb-1.5 text-neutral-400 font-medium">2. Social Links</button>
             <button id="cup-tab-3" onclick="switchCreateUploader(3)" class="flex-1 pb-1.5 text-neutral-400 font-medium">3. Screenshot OCR</button>
           </div>
-
           <div id="cup-pane-1" class="space-y-2.5">
             <div class="flex space-x-1.5">
-              <input type="text" id="cup-search-input" placeholder="Search attraction or paste keyword..." class="flex-1 px-2.5 py-1.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs">
+              <input type="text" id="cup-search-input" placeholder="Search attraction..." class="flex-1 px-2.5 py-1.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs">
               <button onclick="addSpotToDeckFromInput()" class="btn-sweep bg-primary text-white text-[10.5px] font-bold px-3 py-1.5 rounded-xl shrink-0">+ Add</button>
             </div>
-            <span class="text-[9.5px] font-bold text-neutral-500 uppercase tracking-wide block">Popular Kyoto Highlights:</span>
             <div class="space-y-2">
-              <div class="p-2 bg-neutral-50 hover:bg-neutral-100/70 border border-neutral-200 rounded-xl flex items-center justify-between transition-all">
+              <div class="p-2 bg-neutral-50 border border-neutral-200 rounded-xl flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                   <span class="text-lg">⛩️</span>
                   <div>
@@ -1025,9 +987,9 @@
                     <p class="text-[9px] text-neutral-500">Iconic cliffside UNESCO pavilion</p>
                   </div>
                 </div>
-                <button id="btn-add-db-1" onclick="toggleSpotAdd(this, 'Kiyomizu-dera Temple')" class="bg-primary text-white font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs transition-all">✓ Added</button>
+                <button onclick="toggleSpotAdd(this, 'Kiyomizu-dera Temple')" class="bg-primary text-white font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs">✓ Added</button>
               </div>
-              <div class="p-2 bg-neutral-50 hover:bg-neutral-100/70 border border-neutral-200 rounded-xl flex items-center justify-between transition-all">
+              <div class="p-2 bg-neutral-50 border border-neutral-200 rounded-xl flex items-center justify-between">
                 <div class="flex items-center space-x-2">
                   <span class="text-lg">🦊</span>
                   <div>
@@ -1035,80 +997,22 @@
                     <p class="text-[9px] text-neutral-500">Thousand scarlet torii gates</p>
                   </div>
                 </div>
-                <button id="btn-add-db-2" onclick="toggleSpotAdd(this, 'Fushimi Inari Shrine')" class="bg-white border border-primary/40 text-primary font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs hover:bg-primary hover:text-white transition-all">+ Add Spot</button>
-              </div>
-              <div class="p-2 bg-neutral-50 hover:bg-neutral-100/70 border border-neutral-200 rounded-xl flex items-center justify-between transition-all">
-                <div class="flex items-center space-x-2">
-                  <span class="text-lg">🎋</span>
-                  <div>
-                    <h5 class="font-bold text-neutral-900 text-[11px]">Arashiyama Bamboo Grove</h5>
-                    <p class="text-[9px] text-neutral-500">Serene emerald bamboo canopies</p>
-                  </div>
-                </div>
-                <button id="btn-add-db-3" onclick="toggleSpotAdd(this, 'Arashiyama Bamboo Grove')" class="bg-primary text-white font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs transition-all">✓ Added</button>
-              </div>
-              <div class="p-2 bg-neutral-50 hover:bg-neutral-100/70 border border-neutral-200 rounded-xl flex items-center justify-between transition-all">
-                <div class="flex items-center space-x-2">
-                  <span class="text-lg">✨</span>
-                  <div>
-                    <h5 class="font-bold text-neutral-900 text-[11px]">Kinkaku-ji Golden Pavilion</h5>
-                    <p class="text-[9px] text-neutral-500">Zen temple with gold leaf</p>
-                  </div>
-                </div>
-                <button id="btn-add-db-4" onclick="toggleSpotAdd(this, 'Kinkaku-ji (Golden Pavilion)')" class="bg-white border border-primary/40 text-primary font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs hover:bg-primary hover:text-white transition-all">+ Add Spot</button>
+                <button onclick="toggleSpotAdd(this, 'Fushimi Inari Shrine')" class="bg-white border border-primary/40 text-primary font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs hover:bg-primary hover:text-white transition-all">+ Add Spot</button>
               </div>
             </div>
           </div>
-
           <div id="cup-pane-2" class="space-y-2.5 hidden">
-            <div class="space-y-1">
-              <label class="text-[9px] font-bold text-neutral-400 uppercase">Paste Social Link</label>
-              <div class="flex space-x-1.5">
-                <input type="text" id="cup-link-input" placeholder="https://xhslink.com/kyoto-secrets" class="flex-1 px-2.5 py-1.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs">
-                <button onclick="parseCustomLink()" class="btn-sweep bg-primary text-white text-[10.5px] font-bold px-3 py-1.5 rounded-xl shrink-0">Extract</button>
-              </div>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] text-neutral-400 font-bold uppercase">Quick demo links:</span>
-              <div class="flex flex-wrap gap-1">
-                <button onclick="fillAndExtractLink('xhs.link/kyoto-tea-spot')" class="text-[9px] bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded-md font-medium">xhs.link/kyoto-tea-spot</button>
-                <button onclick="fillAndExtractLink('instagram.com/p/gion-hidden-gem')" class="text-[9px] bg-purple-50 text-purple-700 border border-purple-200 px-2 py-0.5 rounded-md font-medium">instagram.com/p/gion-hidden-gem</button>
-              </div>
-            </div>
-            <div class="space-y-2 pt-1">
-              <div class="p-2.5 bg-neutral-50 border border-neutral-200 rounded-xl space-y-1.5">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <div class="flex items-center space-x-1">
-                      <span class="text-[8.5px] font-bold bg-red-100 text-red-700 px-1.5 py-0.2 rounded">Xiaohongshu / 小红书</span>
-                      <span class="text-[9px] text-amber-500 font-bold">★ 4.9</span>
-                    </div>
-                    <h5 class="font-bold text-neutral-900 text-[11px] mt-0.5">Honke Owariya 550-Year Soba</h5>
-                  </div>
-                  <button onclick="toggleSpotAdd(this, 'Honke Owariya Soba')" class="bg-primary text-white font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs transition-all">✓ Added</button>
-                </div>
-                <p class="text-[9.5px] text-neutral-500 italic">"Oldest traditional soba noodles in Kyoto."</p>
-              </div>
+            <label class="text-[9px] font-bold text-neutral-400 uppercase">Paste Social Link</label>
+            <div class="flex space-x-1.5">
+              <input type="text" id="cup-link-input" placeholder="https://xhslink.com/kyoto-secrets" class="flex-1 px-2.5 py-1.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs">
+              <button onclick="parseCustomLink()" class="btn-sweep bg-primary text-white text-[10.5px] font-bold px-3 py-1.5 rounded-xl shrink-0">Extract</button>
             </div>
           </div>
-
           <div id="cup-pane-3" class="space-y-2.5 hidden">
             <div class="border-2 border-dashed border-neutral-300 rounded-xl p-3 text-center bg-neutral-50/70 space-y-1">
               <span class="material-symbols-outlined text-neutral-400 text-2xl">add_photo_alternate</span>
               <p class="text-[10px] text-neutral-600 font-semibold">Drop or select screenshots</p>
               <p class="text-[8.5px] text-neutral-400">OCR extracts name &amp; tags instantly</p>
-            </div>
-            <div class="space-y-2">
-              <div class="p-2.5 bg-white border border-neutral-200 rounded-xl flex items-center justify-between shadow-xs">
-                <div class="flex items-center space-x-2">
-                  <div class="w-9 h-9 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs shrink-0">🗺️</div>
-                  <div>
-                    <span class="text-[8px] bg-blue-50 text-blue-700 font-bold px-1.5 py-0.2 rounded">Google Maps</span>
-                    <h5 class="font-bold text-neutral-900 text-[11px]">Gion Geisha Stroll &amp; Pontocho</h5>
-                  </div>
-                </div>
-                <button onclick="toggleSpotAdd(this, 'Gion Geisha Stroll')" class="bg-white border border-primary/40 text-primary font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs hover:bg-primary hover:text-white transition-all shrink-0">Scan &amp; Add</button>
-              </div>
             </div>
           </div>
         </div>
@@ -1123,11 +1027,43 @@
     </div>
   </div>
 
-  <!-- COMMUNITY INSPECTOR MODAL -->
+  <div id="join-trip-modal" class="absolute inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex flex-col justify-end select-none">
+    <div class="modal-backdrop absolute inset-0" onclick="closeJoinTripModal()"></div>
+    <div class="modal-sheet relative bg-surface w-full rounded-t-[32px] overflow-hidden flex flex-col shadow-2xl">
+      <div class="px-5 py-3 bg-white border-b border-neutral-200 flex items-center justify-between shrink-0">
+        <div>
+          <span class="text-[8.5px] uppercase font-bold text-primary tracking-widest block">Join Trip</span>
+          <h3 class="font-serif font-bold text-neutral-900 text-xs">Enter Invite Code</h3>
+        </div>
+        <button onclick="closeJoinTripModal()" class="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 font-bold" aria-label="Close">✕</button>
+      </div>
+      <div class="p-5 space-y-4">
+        <div class="text-center space-y-3">
+          <div class="w-16 h-16 rounded-full bg-primary-subtle flex items-center justify-center mx-auto">
+            <span class="material-symbols-outlined text-primary text-3xl">group_add</span>
+          </div>
+          <p class="text-[11px] text-neutral-600 leading-relaxed px-2">Ask your trip organizer for the invite code. Enter it below to join.</p>
+        </div>
+        <div class="bg-white p-4 rounded-2xl border border-neutral-200 shadow-xs space-y-3">
+          <label class="text-[9px] font-bold uppercase text-neutral-400 block text-center">Invite Code</label>
+          <input type="text" id="join-code-input" placeholder="RYOKO-482" maxlength="12" oninput="formatJoinCode(this)" onkeypress="if(event.key==='Enter'){ event.preventDefault(); validateAndJoin(); }" class="w-full bg-neutral-50 border-2 border-neutral-200 rounded-2xl px-3 py-4 text-center font-mono font-black text-2xl text-primary tracking-[0.3em] uppercase focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" autocomplete="off">
+          <p class="text-[9px] text-neutral-400 text-center">Try: <span class="font-mono font-bold text-neutral-600 cursor-pointer hover:text-primary" onclick="fillDemoCode('RYOKO-482')">RYOKO-482</span></p>
+        </div>
+        <div id="join-error" class="hidden bg-red-50 border border-red-200 rounded-xl p-2.5 text-[10.5px] text-red-700 flex items-start space-x-1.5">
+          <span class="material-symbols-outlined text-[14px]">error</span>
+          <span id="join-error-text">Code not found.</span>
+        </div>
+        <button onclick="validateAndJoin()" class="btn-sweep w-full py-3.5 bg-primary hover:bg-primary-dark text-white font-bold text-xs rounded-2xl shadow-md flex items-center justify-center space-x-1.5 active:scale-[0.99] transition-all">
+          <span class="material-symbols-outlined text-sm">login</span>
+          <span>Join Trip</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div id="community-inspector-modal" class="absolute inset-0 bg-black/75 backdrop-blur-xs z-50 hidden flex flex-col justify-end select-none">
     <div class="modal-backdrop absolute inset-0" onclick="closeCommunityInspector()"></div>
     <div class="modal-sheet relative bg-surface w-full h-[92%] rounded-t-[32px] overflow-hidden flex flex-col shadow-2xl">
-
       <div class="px-5 py-3 bg-white border-b border-neutral-200 flex items-center justify-between shrink-0">
         <div class="flex-1">
           <span class="text-[8.5px] uppercase font-bold text-primary tracking-widest block">Community Trip</span>
@@ -1135,7 +1071,6 @@
         </div>
         <button onclick="closeCommunityInspector()" class="w-8 h-8 rounded-full bg-neutral-100 flex items-center justify-center text-neutral-600 font-bold" aria-label="Close">✕</button>
       </div>
-
       <div class="relative shrink-0 bg-neutral-100">
         <div class="flex space-x-1.5 px-3 py-2.5 overflow-x-auto hide-scrollbar snap-x snap-mandatory">
           <img id="ci-photo-1" src="" alt="Trip photo 1" class="w-64 h-40 rounded-2xl object-cover snap-center shrink-0 shadow-sm">
@@ -1144,9 +1079,7 @@
         </div>
         <div class="absolute top-5 right-5 bg-black/60 backdrop-blur text-white text-[9px] font-bold px-2 py-0.5 rounded-full">📸 Swipe photos</div>
       </div>
-
       <div class="flex-1 overflow-y-auto p-4 space-y-3 hide-scrollbar text-xs">
-
         <div class="bg-white p-3 rounded-2xl border border-neutral-200 shadow-xs flex items-center space-x-3">
           <img id="ci-host-avatar" src="" alt="Host" class="w-11 h-11 rounded-full object-cover border-2 border-primary">
           <div class="flex-1">
@@ -1155,7 +1088,6 @@
           </div>
           <span class="text-[9px] bg-tertiary-subtle text-tertiary font-bold px-2 py-0.5 rounded-full">✓ Verified</span>
         </div>
-
         <div class="bg-white p-3.5 rounded-2xl border border-neutral-200 shadow-xs space-y-2">
           <div class="flex items-center justify-between">
             <span class="font-serif font-bold text-neutral-900 text-xs">Budget Breakdown</span>
@@ -1184,7 +1116,6 @@
             <span id="ci-split" class="font-bold text-tertiary font-serif text-sm">RM 1,087.50</span>
           </div>
         </div>
-
         <div class="bg-white p-3.5 rounded-2xl border border-neutral-200 shadow-xs space-y-2">
           <span class="font-serif font-bold text-neutral-900 text-xs">Where They Stayed</span>
           <div class="flex items-center space-x-3">
@@ -1196,21 +1127,15 @@
             <span class="text-[9px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded-full">Booked</span>
           </div>
         </div>
-
         <div class="bg-white p-3.5 rounded-2xl border border-neutral-200 shadow-xs space-y-2">
           <span class="font-serif font-bold text-neutral-900 text-xs">Itinerary Highlights</span>
           <div id="ci-itinerary" class="space-y-1.5 text-[10.5px]"></div>
         </div>
-
         <div class="bg-white p-3.5 rounded-2xl border border-neutral-200 shadow-xs space-y-1.5">
           <span class="font-serif font-bold text-neutral-900 text-xs">Author's Note</span>
-          <p id="ci-note" class="text-[11px] text-neutral-600 italic leading-relaxed">
-            "The bamboo grove at 8am was magic."
-          </p>
+          <p id="ci-note" class="text-[11px] text-neutral-600 italic leading-relaxed">"The bamboo grove at 8am was magic."</p>
         </div>
-
       </div>
-
       <div class="p-3.5 bg-white border-t border-neutral-200 shrink-0 flex gap-2">
         <button onclick="cloneTripToMyTrips()" class="btn-sweep flex-1 py-3 bg-white border-2 border-primary text-primary font-bold text-xs rounded-xl shadow-xs flex items-center justify-center space-x-1.5">
           <span class="material-symbols-outlined text-sm">content_copy</span>
@@ -1221,18 +1146,14 @@
           <span>Save</span>
         </button>
       </div>
-
     </div>
   </div>
 
-  <!-- GPS Permission Modal -->
   <div id="gps-permission-dialog" class="absolute inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-6 hidden select-none">
     <div class="bg-white rounded-3xl p-5 w-full max-w-xs shadow-xl text-center border border-neutral-200 anim-pop-in">
       <div class="w-11 h-11 rounded-full bg-emerald-100 text-tertiary flex items-center justify-center mx-auto mb-2 text-xl anim-breathe">📍</div>
       <h3 class="font-serif font-bold text-neutral-900 text-sm mb-1">Push GPS Coordinates</h3>
-      <p class="text-[10.5px] text-neutral-600 mb-3 leading-relaxed">
-        Transmit current location (Kyoto Higashiyama: 35.0037° N, 135.7772° E) to Mei Tian &amp; Fly?
-      </p>
+      <p class="text-[10.5px] text-neutral-600 mb-3 leading-relaxed">Transmit current location (Kyoto Higashiyama: 35.0037° N, 135.7772° E) to Mei Tian &amp; Fly?</p>
       <div class="space-y-1.5">
         <button onclick="confirmGpsBroadcast()" class="btn-sweep w-full bg-primary text-white text-xs font-bold py-2.5 rounded-xl">Allow &amp; Broadcast</button>
         <button onclick="document.getElementById('gps-permission-dialog').classList.add('hidden')" class="w-full bg-neutral-100 text-neutral-700 text-xs py-2 rounded-xl font-medium">Cancel</button>
@@ -1240,7 +1161,6 @@
     </div>
   </div>
 
-  <!-- Montage Modal -->
   <div id="montage-reel-modal" class="absolute inset-0 bg-black/75 backdrop-blur-xs z-50 hidden flex flex-col justify-end select-none">
     <div class="modal-sheet bg-surface w-full h-[88%] rounded-t-[32px] overflow-hidden flex flex-col shadow-2xl">
       <div class="px-5 py-3 bg-white border-b border-neutral-200 flex items-center justify-between shrink-0">
@@ -1277,15 +1197,14 @@
         </div>
       </div>
       <div class="p-3.5 bg-white border-t border-neutral-200 shrink-0">
-        <button onclick="alert('Shared Day Montage to WhatsApp family group!')" class="btn-sweep w-full py-3 bg-tertiary text-white font-bold text-xs rounded-xl shadow-xs flex items-center justify-center space-x-1.5">
+        <button onclick="alert('Shared Day Montage to family group!')" class="btn-sweep w-full py-3 bg-tertiary text-white font-bold text-xs rounded-xl shadow-xs flex items-center justify-center space-x-1.5">
           <span class="material-symbols-outlined text-sm">share</span>
-          <span>Share Montage to WhatsApp</span>
+          <span>Share Montage to Family</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Global Persistent 2-Tab Navigation -->
   <div id="persistent-global-nav" class="absolute bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t border-neutral-200 px-8 py-2 flex justify-around items-center z-40 shrink-0 select-none">
     <button id="nav-btn-trips" onclick="navigateTo('view-trips')" class="flex flex-col items-center text-primary font-bold transition-all">
       <span class="material-symbols-outlined text-[20px]">luggage</span>
@@ -1299,25 +1218,14 @@
 </div>
 
 <script>
-  /* ---------------- TRIP MODE STATE ---------------- */
   let tripMode = 'group';
 
-  /* ---------------- CORE NAVIGATION ---------------- */
   function navigateTo(viewId) {
-    document.querySelectorAll('.screen-panel').forEach(p => {
-      p.classList.remove('active');
-      p.scrollTop = 0;
-    });
+    document.querySelectorAll('.screen-panel').forEach(p => { p.classList.remove('active'); p.scrollTop = 0; });
     const target = document.getElementById(viewId);
     if (target) target.classList.add('active');
-
     const nav = document.getElementById('persistent-global-nav');
-    if (viewId === 'view-welcome' || viewId === 'view-register') {
-      nav.classList.add('hidden');
-    } else {
-      nav.classList.remove('hidden');
-    }
-
+    if (viewId === 'view-welcome' || viewId === 'view-register') { nav.classList.add('hidden'); } else { nav.classList.remove('hidden'); }
     const btnTrips = document.getElementById('nav-btn-trips');
     const btnComm = document.getElementById('nav-btn-community');
     if (viewId === 'view-community') {
@@ -1327,32 +1235,18 @@
       btnTrips.className = "flex flex-col items-center text-primary font-bold transition-all";
       btnComm.className = "flex flex-col items-center text-neutral-400 font-medium transition-all";
     }
-
     const fabWrapper = document.getElementById('ai-fab-wrapper');
     if (viewId !== 'view-trip-hub' && fabWrapper) {
       fabWrapper.classList.add('hidden');
       const drawer = document.getElementById('hub-ai-drawer');
       if (drawer) drawer.classList.add('hidden');
     }
-
-    if (viewId === 'view-trip-hub') {
-      setTimeout(initOrResizeLeafletMap, 150);
-    }
+    if (viewId === 'view-trip-hub') { setTimeout(initOrResizeLeafletMap, 150); }
   }
 
-  function enterAsGuest() {
-    navigateTo('view-trip-hub');
-    switchHubTool('decide');
-    setTimeout(() => updateSwipeLabels(), 100);
-  }
+  function enterAsGuest() { navigateTo('view-trip-hub'); switchHubTool('decide'); setTimeout(() => updateSwipeLabels(), 100); }
+  function openTripHub(id) { navigateTo('view-trip-hub'); switchHubTool('decide'); setTimeout(() => updateSwipeLabels(), 100); }
 
-  function openTripHub(id) {
-    navigateTo('view-trip-hub');
-    switchHubTool('decide');
-    setTimeout(() => updateSwipeLabels(), 100);
-  }
-
-  /* ---------------- TOOL TABS ---------------- */
   function switchHubTool(toolName) {
     ['decide', 'map', 'budget', 'safety'].forEach(t => {
       const pane = document.getElementById('hub-pane-' + t);
@@ -1360,111 +1254,44 @@
       if (pane) pane.classList.add('hidden');
       if (tab) tab.className = "flex-1 py-1.5 rounded-xl text-[10px] font-bold text-neutral-500 transition-all";
     });
-
     const targetPane = document.getElementById('hub-pane-' + toolName);
     const targetTab = document.getElementById('hub-tab-' + toolName);
-    if (targetPane) {
-      targetPane.classList.remove('hidden');
-      targetPane.style.animation = 'none';
-      setTimeout(() => { targetPane.style.animation = ''; }, 10);
-    }
+    if (targetPane) { targetPane.classList.remove('hidden'); targetPane.style.animation = 'none'; setTimeout(() => { targetPane.style.animation = ''; }, 10); }
     if (targetTab) targetTab.className = "flex-1 py-1.5 rounded-xl text-[10px] font-bold bg-white text-primary shadow-xs transition-all";
-
-    if (toolName === 'decide') {
-      updateSwipeLabels();
-    }
-
-    if (toolName === 'map') {
-      setTimeout(initOrResizeLeafletMap, 100);
-    }
-
+    if (toolName === 'decide') { updateSwipeLabels(); }
+    if (toolName === 'map') { setTimeout(initOrResizeLeafletMap, 100); }
     const fabWrapper = document.getElementById('ai-fab-wrapper');
     if (fabWrapper) {
-      if (toolName === 'map') {
-        fabWrapper.classList.remove('hidden');
-      } else {
-        fabWrapper.classList.add('hidden');
-        const drawer = document.getElementById('hub-ai-drawer');
-        if (drawer) drawer.classList.add('hidden');
-      }
+      if (toolName === 'map') { fabWrapper.classList.remove('hidden'); } else { fabWrapper.classList.add('hidden'); const drawer = document.getElementById('hub-ai-drawer'); if (drawer) drawer.classList.add('hidden'); }
     }
   }
 
-  /* ---------------- SOLO/GROUP LABELS ---------------- */
-  function getSwipeHeaderText() {
-    return tripMode === 'solo'
-      ? 'Solo mode · Your call, no votes needed'
-      : 'Swipe left = NOPE, right = LIKE';
-  }
-
-  function getFitLabel() {
-    return tripMode === 'solo' ? '100% Your Choice' : '100% Fit';
-  }
+  function getSwipeHeaderText() { return tripMode === 'solo' ? 'Solo mode · Your call, no votes needed' : 'Swipe left = NOPE, right = LIKE'; }
+  function getFitLabel() { return tripMode === 'solo' ? '100% Your Choice' : '100% Fit'; }
 
   function updateSwipeLabels() {
     const header = document.getElementById('deck-header-text');
     if (header) header.innerText = getSwipeHeaderText();
-
     const fitBadge = document.getElementById('card-fit-label');
     if (fitBadge) fitBadge.innerText = getFitLabel();
-
     const consensusLabel = document.getElementById('card-consensus-label');
     if (consensusLabel) {
       consensusLabel.innerHTML = tripMode === 'solo'
         ? 'Your pick: <strong id="card-votes" class="text-neutral-900">1/1 Liked</strong>'
         : 'Group consensus: <strong id="card-votes" class="text-neutral-900">' + (swipeCards[cardIndex]?.votes || '4/4 Liked') + '</strong>';
     }
-
     const modeBadge = document.getElementById('trip-mode-badge');
-    if (modeBadge) {
-      modeBadge.innerText = tripMode === 'solo' ? 'Solo Mode' : '4 Active';
-    }
+    if (modeBadge) { modeBadge.innerText = tripMode === 'solo' ? 'Solo Mode' : '4 Active'; }
   }
 
-  /* ---------------- 1. DECIDE: SWIPER ---------------- */
   const swipeCards = [
-    {
-      name: "Arashiyama Bamboo Grove",
-      tag: "🎋 Nature • Arashiyama",
-      fee: "RM 0 Admission",
-      desc: "Towering emerald bamboo groves with morning soft sunlight and peaceful temple chimes.",
-      votes: "4/4 Liked",
-      img: "https://lh3.googleusercontent.com/aida/AEtjO1V9UMo51Ixi0743hcV17TXv9Cme59YUa-9hPFhsRNMkrOo981INp4e2Eij_QpZ_f5Oy0_QvhoogxsRyV-7AIHR074wovHPx9h0kHjJRyWKvfMJaXeUIuSYe50pGqjk9QxjQUl-xOgC8IeS9UP_wYpN9qXmfMkkuSkbb3j1QWLcb8F8BTYKw10h2u_j_TIvaeWnish9y64NRDg77rlMwnM-Qkqqc3Ao4adoTgb0miMyZ3b1OwwUVzuoGwTkM"
-    },
-    {
-      name: "Honke Owariya Soba Feast",
-      tag: "🍜 Dining • Kyoto Central",
-      fee: "RM 108 / pax",
-      desc: "550-year-old culinary institution serving delicate buckwheat soba and wild prawn tempura.",
-      votes: "4/4 Liked",
-      img: "https://lh3.googleusercontent.com/aida/AEtjO1WAb5JuOMnIjUXW0xyEvS22ckwN7z8Lz_9iXmq-MQPRa4MAC-mYKmMPPj6x5PR3ycqV9SGCLQvWhkN-TYwUhEHyJUA_eXMHBTUFtk7CU4xHzAiTpug5VMnYvRaa4WYmqL6kBYj9Z-8mRPMf5Vk70dqSuFOIMQ7z-WfKXiEz-Z4oM-9GZ7Jdilo0wRjUBPE6gEVbhRPCNMLQ39fdN6XI_cwrBuljCstC60WnRKLtN3dKlJS5nD7CFNuRTUNt"
-    },
-    {
-      name: "Kyoto Museum Zen Tea Tatami",
-      tag: "✨ Culture • Higashiyama",
-      fee: "RM 45 / pax",
-      desc: "Traditional tea master whisking ceremonial Uji matcha overlooking serene dry rock gardens.",
-      votes: "3/4 Liked",
-      img: "https://lh3.googleusercontent.com/aida/AEtjO1Uz358tSe3K4fxft3d0NpN89nkz9b6LPR2qgfAOkfmQ8LJFVyHR3TPYvbBLriauwUM_BmkzuLGRfgN_qy2aAu_vjTFNdW4FhU6JHkL9ogplRpVJ40IXMVb-NpbZ-C4i4Fr8A3k5iZFdOuU-JtHJgwpfBSAlxhLSR0Cc1MzgUUoKa5YenWa_vuT1hIrmubqgGSizGM7en7NRqIgxU8a15y22rqKxV4_flBhPI6JWRIJVP-5mPTUDmN7OFw4Y"
-    },
-    {
-      name: "Kiyomizu-dera Cliffside Temple",
-      tag: "⛩️ Heritage • Higashiyama",
-      fee: "RM 15 / pax",
-      desc: "Panoramic UNESCO mountain terrace with autumn scarlet foliage and Otowa sacred spring.",
-      votes: "3/4 Liked",
-      img: "https://lh3.googleusercontent.com/aida/AEtjO1UCKvCLAUlLoEc1llYOchCJMR5eA8zBDzwSSOI8tCfRF_YpOnopUZ00hyW5tUa2NVpe9Vzth1Ns5nwvOaeOCXZPSGGeeJBSEDMw9dFtG8WA727VP_LWAnUGeyPsdIxlm5Ncab6GZwp2DVYO2s9oylG-rjklObZx0RjeVw4HsV9rPwYoJM_rDMJ4WJwvfg83qG-yOjBxej6qpyWtbe5Yi5OAamiZwrY_vqg9tEH8W9-_qIvQOyVaAIHZIagi"
-    }
+    { name: "Arashiyama Bamboo Grove", tag: "🎋 Nature • Arashiyama", fee: "RM 0 Admission", desc: "Towering emerald bamboo groves with morning soft sunlight and peaceful temple chimes.", votes: "4/4 Liked", img: "https://lh3.googleusercontent.com/aida/AEtjO1V9UMo51Ixi0743hcV17TXv9Cme59YUa-9hPFhsRNMkrOo981INp4e2Eij_QpZ_f5Oy0_QvhoogxsRyV-7AIHR074wovHPx9h0kHjJRyWKvfMJaXeUIuSYe50pGqjk9QxjQUl-xOgC8IeS9UP_wYpN9qXmfMkkuSkbb3j1QWLcb8F8BTYKw10h2u_j_TIvaeWnish9y64NRDg77rlMwnM-Qkqqc3Ao4adoTgb0miMyZ3b1OwwUVzuoGwTkM" },
+    { name: "Honke Owariya Soba Feast", tag: "🍜 Dining • Kyoto Central", fee: "RM 108 / pax", desc: "550-year-old culinary institution serving delicate buckwheat soba and wild prawn tempura.", votes: "4/4 Liked", img: "https://lh3.googleusercontent.com/aida/AEtjO1WAb5JuOMnIjUXW0xyEvS22ckwN7z8Lz_9iXmq-MQPRa4MAC-mYKmMPPj6x5PR3ycqV9SGCLQvWhkN-TYwUhEHyJUA_eXMHBTUFtk7CU4xHzAiTpug5VMnYvRaa4WYmqL6kBYj9Z-8mRPMf5Vk70dqSuFOIMQ7z-WfKXiEz-Z4oM-9GZ7Jdilo0wRjUBPE6gEVbhRPCNMLQ39fdN6XI_cwrBuljCstC60WnRKLtN3dKlJS5nD7CFNuRTUNt" },
+    { name: "Kyoto Museum Zen Tea Tatami", tag: "✨ Culture • Higashiyama", fee: "RM 45 / pax", desc: "Traditional tea master whisking ceremonial Uji matcha overlooking serene dry rock gardens.", votes: "3/4 Liked", img: "https://lh3.googleusercontent.com/aida/AEtjO1Uz358tSe3K4fxft3d0NpN89nkz9b6LPR2qgfAOkfmQ8LJFVyHR3TPYvbBLriauwUM_BmkzuLGRfgN_qy2aAu_vjTFNdW4FhU6JHkL9ogplRpVJ40IXMVb-NpbZ-C4i4Fr8A3k5iZFdOuU-JtHJgwpfBSAlxhLSR0Cc1MzgUUoKa5YenWa_vuT1hIrmubqgGSizGM7en7NRqIgxU8a15y22rqKxV4_flBhPI6JWRIJVP-5mPTUDmN7OFw4Y" },
+    { name: "Kiyomizu-dera Cliffside Temple", tag: "⛩️ Heritage • Higashiyama", fee: "RM 15 / pax", desc: "Panoramic UNESCO mountain terrace with autumn scarlet foliage and Otowa sacred spring.", votes: "3/4 Liked", img: "https://lh3.googleusercontent.com/aida/AEtjO1UCKvCLAUlLoEc1llYOchCJMR5eA8zBDzwSSOI8tCfRF_YpOnopUZ00hyW5tUa2NVpe9Vzth1Ns5nwvOaeOCXZPSGGeeJBSEDMw9dFtG8WA727VP_LWAnUGeyPsdIxlm5Ncab6GZwp2DVYO2s9oylG-rjklObZx0RjeVw4HsV9rPwYoJM_rDMJ4WJwvfg83qG-yOjBxej6qpyWtbe5Yi5OAamiZwrY_vqg9tEH8W9-_qIvQOyVaAIHZIagi" }
   ];
 
-  let cardIndex = 0;
-  let isDragging = false;
-  let startX = 0;
-  let startY = 0;
-  let currentX = 0;
-  let isFlinging = false;
-  let userVotes = {};
-
+  let cardIndex = 0, isDragging = false, startX = 0, startY = 0, currentX = 0, isFlinging = false, userVotes = {};
   const cardElem = document.getElementById('swipe-card');
   const stampLike = document.getElementById('stamp-like');
   const stampNope = document.getElementById('stamp-nope');
@@ -1477,263 +1304,101 @@
       document.getElementById('card-fee').innerText = c.fee;
       document.getElementById('card-desc').innerText = c.desc;
       document.getElementById('card-bg-image').style.backgroundImage = `url('${c.img}')`;
-
       const consensusLabel = document.getElementById('card-consensus-label');
       if (consensusLabel) {
-        consensusLabel.innerHTML = tripMode === 'solo'
-          ? 'Your pick: <strong id="card-votes" class="text-neutral-900">1/1 Liked</strong>'
-          : 'Group consensus: <strong id="card-votes" class="text-neutral-900">' + c.votes + '</strong>';
+        consensusLabel.innerHTML = tripMode === 'solo' ? 'Your pick: <strong id="card-votes" class="text-neutral-900">1/1 Liked</strong>' : 'Group consensus: <strong id="card-votes" class="text-neutral-900">' + c.votes + '</strong>';
       }
-
       const fitBadge = document.getElementById('card-fit-label');
       if (fitBadge) fitBadge.innerText = getFitLabel();
-
       const left = swipeCards.length - cardIndex;
       document.getElementById('deck-count-badge').innerText = `Card ${cardIndex + 1} of ${swipeCards.length} (${left} left)`;
-
       cardElem.style.transform = 'translate3d(0, 0, 0) rotate(0deg)';
       cardElem.style.opacity = '1';
       stampLike.style.opacity = '0';
       stampNope.style.opacity = '0';
       isFlinging = false;
-
       cardElem.style.animation = 'none';
-      setTimeout(() => {
-        cardElem.style.animation = 'popIn 380ms cubic-bezier(0.22, 1, 0.36, 1)';
-      }, 10);
-    } else {
-      showConsensusDirectly();
-    }
+      setTimeout(() => { cardElem.style.animation = 'popIn 380ms cubic-bezier(0.22, 1, 0.36, 1)'; }, 10);
+    } else { showConsensusDirectly(); }
   }
 
-  function handlePointerDown(e) {
-    if (isFlinging || cardIndex >= swipeCards.length) return;
-    isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
-    currentX = 0;
-    cardElem.classList.add('dragging');
-    try { cardElem.setPointerCapture(e.pointerId); } catch(err) {}
-  }
-
+  function handlePointerDown(e) { if (isFlinging || cardIndex >= swipeCards.length) return; isDragging = true; startX = e.clientX; startY = e.clientY; currentX = 0; cardElem.classList.add('dragging'); try { cardElem.setPointerCapture(e.pointerId); } catch(err) {} }
   function handlePointerMove(e) {
     if (!isDragging) return;
     currentX = e.clientX - startX;
     const dy = e.clientY - startY;
-
     const rotate = Math.max(-18, Math.min(18, currentX * 0.08));
     cardElem.style.transform = `translate3d(${currentX}px, ${dy * 0.25}px, 0) rotate(${rotate}deg)`;
-
-    if (currentX > 25) {
-      stampLike.style.opacity = Math.min(1, (currentX - 25) / 60);
-      stampNope.style.opacity = 0;
-    } else if (currentX < -25) {
-      stampNope.style.opacity = Math.min(1, (-currentX - 25) / 60);
-      stampLike.style.opacity = 0;
-    } else {
-      stampLike.style.opacity = 0;
-      stampNope.style.opacity = 0;
-    }
+    if (currentX > 25) { stampLike.style.opacity = Math.min(1, (currentX - 25) / 60); stampNope.style.opacity = 0; }
+    else if (currentX < -25) { stampNope.style.opacity = Math.min(1, (-currentX - 25) / 60); stampLike.style.opacity = 0; }
+    else { stampLike.style.opacity = 0; stampNope.style.opacity = 0; }
   }
-
   function handlePointerUp(e) {
     if (!isDragging) return;
     isDragging = false;
     cardElem.classList.remove('dragging');
     try { cardElem.releasePointerCapture(e.pointerId); } catch(err) {}
-
     const threshold = 75;
-    if (currentX > threshold) {
-      flingCard('right');
-    } else if (currentX < -threshold) {
-      flingCard('left');
-    } else {
+    if (currentX > threshold) { flingCard('right'); }
+    else if (currentX < -threshold) { flingCard('left'); }
+    else {
       cardElem.style.transition = 'transform 0.2s ease-out';
       cardElem.style.transform = 'translate3d(0,0,0) rotate(0deg)';
-      stampLike.style.opacity = '0';
-      stampNope.style.opacity = '0';
+      stampLike.style.opacity = '0'; stampNope.style.opacity = '0';
       setTimeout(() => { cardElem.style.transition = ''; }, 200);
     }
   }
-
   function flingCard(direction) {
     isFlinging = true;
     const card = swipeCards[cardIndex];
     userVotes[card.name] = direction;
-
     cardElem.style.transition = 'transform 0.32s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.28s ease';
-    if (direction === 'right') {
-      stampLike.style.opacity = '1';
-      stampNope.style.opacity = '0';
-      cardElem.style.transform = 'translate3d(150%, 20px, 0) rotate(25deg)';
-    } else {
-      stampNope.style.opacity = '1';
-      stampLike.style.opacity = '0';
-      cardElem.style.transform = 'translate3d(-150%, 20px, 0) rotate(-25deg)';
-    }
+    if (direction === 'right') { stampLike.style.opacity = '1'; stampNope.style.opacity = '0'; cardElem.style.transform = 'translate3d(150%, 20px, 0) rotate(25deg)'; }
+    else { stampNope.style.opacity = '1'; stampLike.style.opacity = '0'; cardElem.style.transform = 'translate3d(-150%, 20px, 0) rotate(-25deg)'; }
     cardElem.style.opacity = '0';
-
-    setTimeout(() => {
-      cardIndex++;
-      cardElem.style.transition = '';
-      renderCard();
-    }, 320);
+    setTimeout(() => { cardIndex++; cardElem.style.transition = ''; renderCard(); }, 320);
   }
-
-  function triggerCardAction(dir) {
-    if (isFlinging || cardIndex >= swipeCards.length) return;
-    flingCard(dir);
-  }
-
+  function triggerCardAction(dir) { if (isFlinging || cardIndex >= swipeCards.length) return; flingCard(dir); }
   cardElem.addEventListener('pointerdown', handlePointerDown);
   cardElem.addEventListener('pointermove', handlePointerMove);
   cardElem.addEventListener('pointerup', handlePointerUp);
   cardElem.addEventListener('pointercancel', handlePointerUp);
 
-  /* ---------------- CONSENSUS VIEW ---------------- */
   function showConsensusDirectly() {
     document.getElementById('deck-active-container').classList.add('hidden');
-    const consensusContainer = document.getElementById('deck-consensus-container');
-    consensusContainer.classList.remove('hidden');
-
+    document.getElementById('deck-consensus-container').classList.remove('hidden');
     const list = document.getElementById('deck-results-list');
-    const liked = [];
-    const skipped = [];
-
-    swipeCards.forEach(card => {
-      const vote = userVotes[card.name];
-      if (vote === 'right') liked.push(card);
-      else if (vote === 'left') skipped.push(card);
-    });
-
+    const liked = [], skipped = [];
+    swipeCards.forEach(card => { const vote = userVotes[card.name]; if (vote === 'right') liked.push(card); else if (vote === 'left') skipped.push(card); });
     const hasVotes = Object.keys(userVotes).length > 0;
     const finalLiked = hasVotes ? liked : swipeCards.slice();
     const finalSkipped = hasVotes ? skipped : [];
-
     document.getElementById('tally-liked').innerText = `${finalLiked.length} approved`;
     document.getElementById('tally-skipped').innerText = `${finalSkipped.length} removed`;
-
     const tallyLabel = document.getElementById('tally-label');
-    if (tallyLabel) {
-      tallyLabel.innerText = tripMode === 'solo' ? 'Solo Mode · 100% Your Choice' : 'Your Vote Counts 25%';
-    }
-
+    if (tallyLabel) { tallyLabel.innerText = tripMode === 'solo' ? 'Solo Mode · 100% Your Choice' : 'Your Vote Counts 25%'; }
     const consensusTitle = document.getElementById('consensus-title');
     const consensusSub = document.getElementById('consensus-subtitle');
-    if (consensusTitle) {
-      consensusTitle.innerText = tripMode === 'solo' ? 'Your Picks Locked' : 'Final Consensus Locked';
-    }
-    if (consensusSub) {
-      consensusSub.innerHTML = tripMode === 'solo'
-        ? '<span class="text-tertiary font-bold">Solo journey</span> · Instantly added to your itinerary'
-        : '<span class="text-tertiary font-bold">All 4 companions voted</span> · Your picks finalize the trip';
-    }
-
-    const approvedLabel = tripMode === 'solo' ? '✓ Added to Your Day 2' : '✓ Added to Trip Day 2';
-    const removedLabel = tripMode === 'solo' ? '✕ Skipped by You' : '✕ Removed from Trip';
-
+    if (consensusTitle) { consensusTitle.innerText = tripMode === 'solo' ? 'Your Picks Locked' : 'Final Consensus Locked'; }
+    if (consensusSub) { consensusSub.innerHTML = tripMode === 'solo' ? '<span class="text-tertiary font-bold">Solo journey</span> · Instantly added to your itinerary' : '<span class="text-tertiary font-bold">All 4 companions voted</span> · Your picks finalize the trip'; }
     let html = '';
-
     if (finalLiked.length > 0) {
-      html += `
-        <div class="flex items-center justify-between px-1 pt-1 pb-2 anim-fade-down">
-          <span class="text-[10px] font-bold text-tertiary uppercase tracking-wide">${approvedLabel}</span>
-          <span class="text-[9px] bg-tertiary text-white font-bold px-2 py-0.5 rounded-full">${finalLiked.length} spots</span>
-        </div>
-      `;
-
+      html += `<div class="flex items-center justify-between px-1 pt-1 pb-2 anim-fade-down"><span class="text-[10px] font-bold text-tertiary uppercase tracking-wide">✓ Added to Trip Day 2</span><span class="text-[9px] bg-tertiary text-white font-bold px-2 py-0.5 rounded-full">${finalLiked.length} spots</span></div>`;
       finalLiked.forEach((card, i) => {
-        const companionLike = [4, 4, 3, 3, 4][i % 5];
-        const consensusPct = Math.round((companionLike / 4) * 100);
-
-        const avatarRow = tripMode === 'solo'
-          ? `<div class="w-4 h-4 rounded-full bg-amber-300 border border-white flex items-center justify-center text-[7px] font-bold text-amber-900">J</div>`
-          : `
-            <div class="w-4 h-4 rounded-full bg-amber-300 border border-white flex items-center justify-center text-[7px] font-bold text-amber-900">J</div>
-            <div class="w-4 h-4 rounded-full bg-primary/70 border border-white flex items-center justify-center text-[7px] font-bold text-white">E</div>
-            <div class="w-4 h-4 rounded-full bg-tertiary/70 border border-white flex items-center justify-center text-[7px] font-bold text-white">M</div>
-            <div class="w-4 h-4 rounded-full bg-blue-500/70 border border-white flex items-center justify-center text-[7px] font-bold text-white">L</div>
-          `;
-
-        const matchText = tripMode === 'solo' ? '100% your pick' : `${consensusPct}% match`;
-
-        html += `
-          <div class="bg-white p-3 rounded-2xl border border-tertiary/50 shadow-sm flex items-start space-x-2.5 anim-pop-in lift-on-hover" style="animation-delay: ${i * 70}ms;">
-            <div class="w-14 h-14 rounded-xl bg-cover bg-center shrink-0 shadow-xs border border-neutral-200" style="background-image: url('${card.img}');"></div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between gap-1.5">
-                <h5 class="font-serif font-bold text-neutral-900 text-[12px] leading-tight truncate">${card.name}</h5>
-                <span class="text-[9px] bg-tertiary text-white font-bold px-2 py-0.5 rounded-full shrink-0 flex items-center space-x-0.5">
-                  <span class="material-symbols-outlined text-[10px]">check_circle</span>
-                  <span>Kept</span>
-                </span>
-              </div>
-              <p class="text-[9px] text-neutral-500 mt-0.5 truncate">${card.tag}</p>
-              <div class="flex items-center justify-between mt-1.5">
-                <div class="flex items-center space-x-1">
-                  <div class="flex -space-x-1">${avatarRow}</div>
-                  <span class="text-[8.5px] text-tertiary font-bold">${matchText}</span>
-                </div>
-                <span class="text-[8.5px] text-neutral-400">You liked this ✓</span>
-              </div>
-            </div>
-          </div>
-        `;
+        html += `<div class="bg-white p-3 rounded-2xl border border-tertiary/50 shadow-sm flex items-start space-x-2.5 anim-pop-in" style="animation-delay: ${i * 70}ms;"><div class="w-14 h-14 rounded-xl bg-cover bg-center shrink-0 shadow-xs border border-neutral-200" style="background-image: url('${card.img}');"></div><div class="flex-1 min-w-0"><div class="flex items-center justify-between gap-1.5"><h5 class="font-serif font-bold text-neutral-900 text-[12px] leading-tight truncate">${card.name}</h5><span class="text-[9px] bg-tertiary text-white font-bold px-2 py-0.5 rounded-full shrink-0">Kept</span></div><p class="text-[9px] text-neutral-500 mt-0.5 truncate">${card.tag}</p></div></div>`;
       });
     }
-
     if (finalSkipped.length > 0) {
-      html += `
-        <div class="flex items-center justify-between px-1 pt-3 pb-2 anim-fade-down">
-          <span class="text-[10px] font-bold text-neutral-500 uppercase tracking-wide">${removedLabel}</span>
-          <span class="text-[9px] bg-neutral-300 text-neutral-700 font-bold px-2 py-0.5 rounded-full">${finalSkipped.length} skipped</span>
-        </div>
-      `;
-
+      html += `<div class="flex items-center justify-between px-1 pt-3 pb-2 anim-fade-down"><span class="text-[10px] font-bold text-neutral-500 uppercase tracking-wide">✕ Removed from Trip</span><span class="text-[9px] bg-neutral-300 text-neutral-700 font-bold px-2 py-0.5 rounded-full">${finalSkipped.length} skipped</span></div>`;
       finalSkipped.forEach((card, i) => {
-        html += `
-          <div class="bg-neutral-50 p-3 rounded-2xl border border-neutral-200 shadow-xs flex items-start space-x-2.5 opacity-70 anim-pop-in" style="animation-delay: ${i * 70}ms;">
-            <div class="w-14 h-14 rounded-xl bg-cover bg-center shrink-0 border border-neutral-200 grayscale opacity-60" style="background-image: url('${card.img}');"></div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center justify-between gap-1.5">
-                <h5 class="font-serif font-bold text-neutral-500 text-[12px] leading-tight truncate line-through">${card.name}</h5>
-                <span class="text-[9px] bg-neutral-200 text-neutral-600 font-bold px-2 py-0.5 rounded-full shrink-0 flex items-center space-x-0.5">
-                  <span class="material-symbols-outlined text-[10px]">block</span>
-                  <span>Removed</span>
-                </span>
-              </div>
-              <p class="text-[9px] text-neutral-400 mt-0.5 truncate">${card.tag}</p>
-              <div class="flex items-center justify-between mt-1.5">
-                <span class="text-[8.5px] text-neutral-400">${tripMode === 'solo' ? 'You skipped ✕' : 'You skipped this ✕'}</span>
-                <span class="text-[8.5px] text-neutral-400 italic">Not added to map</span>
-              </div>
-            </div>
-          </div>
-        `;
+        html += `<div class="bg-neutral-50 p-3 rounded-2xl border border-neutral-200 flex items-start space-x-2.5 opacity-70 anim-pop-in" style="animation-delay: ${i * 70}ms;"><div class="w-14 h-14 rounded-xl bg-cover bg-center shrink-0 grayscale opacity-60" style="background-image: url('${card.img}');"></div><div class="flex-1 min-w-0"><h5 class="font-serif font-bold text-neutral-500 text-[12px] truncate line-through">${card.name}</h5></div></div>`;
       });
     }
-
-    if (finalLiked.length === 0 && finalSkipped.length > 0) {
-      html = `
-        <div class="text-center py-6 anim-fade-up">
-          <span class="text-4xl">😅</span>
-          <p class="text-xs text-neutral-500 mt-2 font-bold">You skipped all spots!</p>
-          <p class="text-[10px] text-neutral-400 mt-1">The AI will suggest alternatives in the Map tab.</p>
-        </div>
-      ` + html;
-    }
-
     list.innerHTML = html;
     list.scrollTop = 0;
   }
 
-  /* ---------------- 2. LEAFLET MAP ---------------- */
-  let leafletMap = null;
-  let tileLayer = null;
-  let isOsmTiles = false;
-  let markers = [];
-  let polyline = null;
-
+  let leafletMap = null, tileLayer = null, isOsmTiles = false, markers = [], polyline = null;
   const kyotoCoords = [
     { name: "1. Arashiyama Bamboo Grove", lat: 35.0168, lng: 135.6713, color: "#9e3c26", num: "1" },
     { name: "2. Honke Owariya Soba Feast", lat: 35.0116, lng: 135.7601, color: "#be543c", num: "2" },
@@ -1743,92 +1408,38 @@
   function initOrResizeLeafletMap() {
     const container = document.getElementById('leaflet-map-canvas');
     if (!container) return;
-
     if (!leafletMap) {
-      leafletMap = L.map('leaflet-map-canvas', {
-        center: [35.0037, 135.7600],
-        zoom: 13,
-        zoomControl: false,
-        attributionControl: true
-      });
-
-      tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OSM &copy; CARTO',
-        subdomains: 'abcd',
-        maxZoom: 19
-      }).addTo(leafletMap);
-
+      leafletMap = L.map('leaflet-map-canvas', { center: [35.0037, 135.7600], zoom: 13, zoomControl: false, attributionControl: true });
+      tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OSM &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(leafletMap);
       L.control.zoom({ position: 'bottomright' }).addTo(leafletMap);
-
-      kyotoCoords.forEach((spot, i) => {
-        const icon = L.divIcon({
-          className: 'pin-marker-wrap',
-          html: `<div class="pin-pill w-7 h-7 text-xs font-serif" style="background-color: ${spot.color}; animation-delay: ${i * 150}ms;">${spot.num}</div>`,
-          iconSize: [28, 28],
-          iconAnchor: [14, 14],
-          popupAnchor: [0, -14]
-        });
-
+      kyotoCoords.forEach((spot) => {
+        const icon = L.divIcon({ className: 'pin-marker-wrap', html: `<div class="pin-pill w-7 h-7 text-xs font-serif" style="background-color: ${spot.color};">${spot.num}</div>`, iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -14] });
         const m = L.marker([spot.lat, spot.lng], { icon: icon }).addTo(leafletMap);
-        m.bindPopup(`<strong style="color: #9e3c26;">${spot.name}</strong><br/><span style="font-size: 10px;">Day 2 Scheduled Stop</span>`);
+        m.bindPopup(`<strong style="color: #9e3c26;">${spot.name}</strong>`);
         markers.push(m);
       });
-
       const latlngs = kyotoCoords.map(s => [s.lat, s.lng]);
-      polyline = L.polyline(latlngs, {
-        color: '#9e3c26',
-        weight: 3.5,
-        opacity: 0.85,
-        dashArray: '6, 6'
-      }).addTo(leafletMap);
-
+      polyline = L.polyline(latlngs, { color: '#9e3c26', weight: 3.5, opacity: 0.85, dashArray: '6, 6' }).addTo(leafletMap);
       leafletMap.fitBounds(L.latLngBounds(latlngs), { padding: [25, 25] });
-    } else {
-      leafletMap.invalidateSize();
-    }
+    } else { leafletMap.invalidateSize(); }
   }
-
   function toggleMapLayerStyle() {
     if (!leafletMap) return;
     leafletMap.removeLayer(tileLayer);
     if (!isOsmTiles) {
-      tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap',
-        maxZoom: 19
-      }).addTo(leafletMap);
+      tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 }).addTo(leafletMap);
       document.getElementById('map-style-text').innerText = "OSM Street";
       isOsmTiles = true;
     } else {
-      tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OSM &copy; CARTO',
-        subdomains: 'abcd',
-        maxZoom: 19
-      }).addTo(leafletMap);
+      tileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OSM &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(leafletMap);
       document.getElementById('map-style-text').innerText = "Voyager";
       isOsmTiles = false;
     }
   }
+  function recenterKyotoMap() { if (!leafletMap) return; const latlngs = kyotoCoords.map(s => [s.lat, s.lng]); leafletMap.fitBounds(L.latLngBounds(latlngs), { padding: [25, 25] }); }
+  function focusMapMarker(idx) { if (!leafletMap || !markers[idx]) return; const spot = kyotoCoords[idx]; leafletMap.flyTo([spot.lat, spot.lng], 15, { animate: true, duration: 0.8 }); markers[idx].openPopup(); }
 
-  function recenterKyotoMap() {
-    if (!leafletMap) return;
-    const latlngs = kyotoCoords.map(s => [s.lat, s.lng]);
-    leafletMap.fitBounds(L.latLngBounds(latlngs), { padding: [25, 25] });
-  }
-
-  function focusMapMarker(idx) {
-    if (!leafletMap || !markers[idx]) return;
-    const spot = kyotoCoords[idx];
-    leafletMap.flyTo([spot.lat, spot.lng], 15, { animate: true, duration: 0.8 });
-    markers[idx].openPopup();
-  }
-
-  /* ---------------- AI COPILOT ---------------- */
-  function toggleAiDrawer(show) {
-    const drawer = document.getElementById('hub-ai-drawer');
-    if (show) drawer.classList.remove('hidden');
-    else drawer.classList.add('hidden');
-  }
-
+  function toggleAiDrawer(show) { const drawer = document.getElementById('hub-ai-drawer'); if (show) drawer.classList.remove('hidden'); else drawer.classList.add('hidden'); }
   function sendAiCopilotPrompt(type) {
     const chat = document.getElementById('ai-chat-messages');
     let msg = '';
@@ -1841,120 +1452,51 @@
     chat.appendChild(p);
     chat.scrollTop = chat.scrollHeight;
   }
-
-  /* ---------------- AI CHATBOT — User Typed Message ---------------- */
   function sendAiUserMessage() {
     const input = document.getElementById('ai-chat-input');
     const txt = input.value.trim();
     if (!txt) return;
-
     const chat = document.getElementById('ai-chat-messages');
-
-    // 1. User message (right-aligned)
     const userMsg = document.createElement('div');
     userMsg.className = "flex items-end justify-end space-x-1.5 ml-auto max-w-[90%] anim-bubble-in";
-    userMsg.innerHTML = `
-      <div class="bg-primary text-white p-2 rounded-xl shadow-xs">
-        <p class="text-[10.5px]">${escapeHtml(txt)}</p>
-        <span class="text-[7.5px] text-white/70 block text-right mt-0.5">Just now ✓✓</span>
-      </div>
-    `;
+    userMsg.innerHTML = `<div class="bg-primary text-white p-2 rounded-xl shadow-xs"><p class="text-[10.5px]">${escapeHtml(txt)}</p><span class="text-[7.5px] text-white/70 block text-right mt-0.5">Just now ✓✓</span></div>`;
     chat.appendChild(userMsg);
     input.value = '';
     chat.scrollTop = chat.scrollHeight;
-
-    // 2. Typing indicator
     const typing = document.createElement('div');
     typing.id = 'ai-typing-indicator';
     typing.className = "flex items-start space-x-1.5 max-w-[90%] anim-bubble-in";
-    typing.innerHTML = `
-      <div class="w-5 h-5 rounded-full bg-primary text-white text-[8px] font-bold flex items-center justify-center shrink-0">AI</div>
-      <div class="bg-white p-2 rounded-xl border border-neutral-200 shadow-xs">
-        <div class="flex items-center space-x-1">
-          <span class="typing-dot"></span>
-          <span class="typing-dot"></span>
-          <span class="typing-dot"></span>
-        </div>
-      </div>
-    `;
+    typing.innerHTML = `<div class="w-5 h-5 rounded-full bg-primary text-white text-[8px] font-bold flex items-center justify-center shrink-0">AI</div><div class="bg-white p-2 rounded-xl border border-neutral-200 shadow-xs"><div class="flex items-center space-x-1"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div></div>`;
     chat.appendChild(typing);
     chat.scrollTop = chat.scrollHeight;
-
-    // 3. AI reply after a short delay
     setTimeout(() => {
       typing.remove();
       const reply = generateAiReply(txt);
-
       const aiMsg = document.createElement('div');
       aiMsg.className = "flex items-start space-x-1.5 max-w-[90%] anim-bubble-in";
-      aiMsg.innerHTML = `
-        <div class="w-5 h-5 rounded-full bg-primary text-white text-[8px] font-bold flex items-center justify-center shrink-0">AI</div>
-        <div class="bg-white p-2 rounded-xl border border-neutral-200 shadow-xs space-y-1">
-          <p class="text-[10.5px] text-neutral-700">${reply}</p>
-          <span class="text-[7.5px] text-neutral-400 block text-right">Just now</span>
-        </div>
-      `;
+      aiMsg.innerHTML = `<div class="w-5 h-5 rounded-full bg-primary text-white text-[8px] font-bold flex items-center justify-center shrink-0">AI</div><div class="bg-white p-2 rounded-xl border border-neutral-200 shadow-xs space-y-1"><p class="text-[10.5px] text-neutral-700">${reply}</p><span class="text-[7.5px] text-neutral-400 block text-right">Just now</span></div>`;
       chat.appendChild(aiMsg);
       chat.scrollTop = chat.scrollHeight;
     }, 1000);
   }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
+  function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
   function generateAiReply(userText) {
     const t = userText.toLowerCase();
-
-    if (t.includes('rain') || t.includes('weather') || t.includes('storm')) {
-      return "🌧️ Forecast shows rain tomorrow 2pm–5pm. I've moved your Bamboo Trail earlier to 8am and swapped your afternoon with the indoor Kyoto Museum Zen Tea Pavilion. Check the Itinerary for updates.";
-    }
-    if (t.includes('food') || t.includes('eat') || t.includes('restaurant') || t.includes('dinner') || t.includes('lunch')) {
-      return "🍜 I've added two spots near your route: <strong>Gion Tsujiri Matcha Parfait</strong> (RM 28/pax) and <strong>Nishiki Market Street Food</strong>. Both fit your budget and are peanut-safe.";
-    }
-    if (t.includes('walk') || t.includes('transport') || t.includes('taxi') || t.includes('tired') || t.includes('distance')) {
-      return "⚡ I've replaced the 22-min walking segment with the Keihan Main Line. Total walking cut from 58 mins to 18 mins. Transit cost: RM 4/pax.";
-    }
-    if (t.includes('delay') || t.includes('flight') || t.includes('cancel')) {
-      return "✈️ If your flight is delayed, I'll auto-reschedule Day 1's arrival activities and notify your guardians. Just tell me the new ETA.";
-    }
-    if (t.includes('change') || t.includes('replan') || t.includes('different') || t.includes('swap')) {
-      return "🔄 Got it! Tell me which day and I'll suggest 3 alternative spots nearby. Or tap 'Proceed to Interactive Map' to drag-drop manually.";
-    }
-    if (t.includes('budget') || t.includes('cost') || t.includes('cheap') || t.includes('expensive') || t.includes('save')) {
-      return "💰 Your trip is RM 4,350 total (RM 1,087.50/pax). To save RM 200, swap Honke Owariya for a casual ramen spot nearby. Want me to compare?";
-    }
-    if (t.includes('safe') || t.includes('safety') || t.includes('guardian') || t.includes('emergency')) {
-      return "🛡️ Your guardian GPS beacon is live at 35.0037°N, 135.7772°E. Last check-in: 12:20 PM. Tap 'Push GPS' in Safety to broadcast.";
-    }
-    if (t.includes('attraction') || t.includes('recommend') || t.includes('visit') || t.includes('see')) {
-      return "🏛️ Based on your interests, I'd add: <strong>Kinkaku-ji</strong> (early morning), <strong>Philosopher's Path</strong>, and <strong>Nishiki Market</strong>. All within budget.";
-    }
-    if (t.includes('who') && t.includes('you')) {
-      return "🤖 I'm your Ryokō Itinerary Copilot. I monitor weather, crowd density, dietary preferences, and guardian GPS. Type anything you want changed.";
-    }
-    if (t.includes('thank')) {
-      return "😊 Anytime! Ping me for anything else.";
-    }
-    if (t.includes('hi') || t.includes('hello') || t.includes('hey')) {
-      return "👋 Hi! Ask me to add spots, adjust walking, reschedule for weather, or update guardians. What do you need?";
-    }
-
-    return "🤖 Got it! I've noted that. In the full version, I'd update your itinerary automatically. Anything else you'd like to change?";
+    if (t.includes('rain') || t.includes('weather')) return "🌧️ Forecast shows rain tomorrow 2pm–5pm. I've moved your Bamboo Trail to 8am and swapped the afternoon with the indoor Kyoto Museum Zen Tea Pavilion.";
+    if (t.includes('food') || t.includes('eat') || t.includes('restaurant')) return "🍜 I've added Gion Tsujiri Matcha Parfait (RM 28/pax) and Nishiki Market Street Food. Both fit your budget and are peanut-safe.";
+    if (t.includes('walk') || t.includes('transport') || t.includes('taxi')) return "⚡ Replaced 22-min walking segment with Keihan Main Line. Total walking cut from 58 mins to 18 mins. Transit: RM 4/pax.";
+    if (t.includes('delay') || t.includes('flight')) return "✈️ If your flight is delayed, I'll auto-reschedule Day 1's arrival activities and notify your guardians.";
+    if (t.includes('change') || t.includes('replan') || t.includes('swap')) return "🔄 Got it! Tell me which day and I'll suggest 3 alternative spots nearby.";
+    if (t.includes('budget') || t.includes('cost') || t.includes('save')) return "💰 Trip total: RM 4,350 (RM 1,087.50/pax). To save RM 200, swap Honke Owariya for a casual ramen spot.";
+    if (t.includes('safe') || t.includes('guardian')) return "🛡️ Guardian GPS beacon live at 35.0037°N, 135.7772°E. Last check-in: 12:20 PM.";
+    if (t.includes('who') && t.includes('you')) return "🤖 I'm your Ryokō Itinerary Copilot. I monitor weather, crowd density, dietary preferences, and guardian GPS.";
+    if (t.includes('thank')) return "😊 Anytime! Ping me for anything else.";
+    if (t.includes('hi') || t.includes('hello')) return "👋 Hi! Ask me to add spots, adjust walking, reschedule for weather, or update guardians.";
+    return "🤖 Got it! In the full version, I'd update your itinerary automatically. Anything else you'd like to change?";
   }
 
-  /* ---------------- BUDGET ---------------- */
-  let currentTargetAmount = 1000;
-  let currentSavingsDays = 30;
-
-  function setSavingsTarget(amt) {
-    currentTargetAmount = amt;
-    document.getElementById('budget-target-label').innerText = `RM ${amt.toLocaleString()}.00`;
-    updateDailySavingsOutput();
-  }
-
+  let currentTargetAmount = 1000, currentSavingsDays = 30;
+  function setSavingsTarget(amt) { currentTargetAmount = amt; document.getElementById('budget-target-label').innerText = `RM ${amt.toLocaleString()}.00`; updateDailySavingsOutput(); }
   function setSavingsDays(days) {
     currentSavingsDays = days;
     document.getElementById('savings-dur-text').innerText = `${days} Days`;
@@ -1965,50 +1507,29 @@
     });
     updateDailySavingsOutput();
   }
-
-  function updateDailySavingsOutput() {
-    const daily = (currentTargetAmount / currentSavingsDays).toFixed(2);
-    document.getElementById('daily-save-output').innerText = `💡 Daily Savings: RM ${daily} / day`;
-  }
-
+  function updateDailySavingsOutput() { const daily = (currentTargetAmount / currentSavingsDays).toFixed(2); document.getElementById('daily-save-output').innerText = `💡 Daily Savings: RM ${daily} / day`; }
   let receiptExpanded = true;
   function toggleReceiptAccordion() {
     receiptExpanded = !receiptExpanded;
     const content = document.getElementById('receipt-accordion-content');
     const chevron = document.getElementById('receipt-chevron-icon');
-    if (receiptExpanded) {
-      content.classList.remove('hidden');
-      chevron.innerText = "expand_less";
-    } else {
-      content.classList.add('hidden');
-      chevron.innerText = "expand_more";
-    }
+    if (receiptExpanded) { content.classList.remove('hidden'); chevron.innerText = "expand_less"; } else { content.classList.add('hidden'); chevron.innerText = "expand_more"; }
   }
-
   function recalculateFairShare() {
     let sum = 0;
-    document.querySelectorAll('.soba-item:checked').forEach(box => {
-      sum += parseFloat(box.value || 0);
-    });
+    document.querySelectorAll('.soba-item:checked').forEach(box => { sum += parseFloat(box.value || 0); });
     document.getElementById('fair-share-total-label').innerText = `RM ${sum.toFixed(2)}`;
   }
 
-  /* ---------------- SAFETY ---------------- */
   function confirmGpsBroadcast() {
     document.getElementById('gps-permission-dialog').classList.add('hidden');
     const chat = document.getElementById('guardian-chat-messages');
     const div = document.createElement('div');
     div.className = "flex items-end justify-end space-x-1.5 ml-auto max-w-[85%] anim-bubble-in";
-    div.innerHTML = `
-      <div class="bg-primary text-white rounded-2xl p-2 shadow-xs text-right">
-        <span class="text-[9.5px] block font-mono">📍 GPS Shared: 35.0037° N, 135.7772° E</span>
-        <span class="text-[7.5px] text-white/80 block">Just now ✓✓</span>
-      </div>
-    `;
+    div.innerHTML = `<div class="bg-primary text-white rounded-2xl p-2 shadow-xs text-right"><span class="text-[9.5px] block font-mono">📍 GPS Shared: 35.0037° N, 135.7772° E</span><span class="text-[7.5px] text-white/80 block">Just now ✓✓</span></div>`;
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
   }
-
   function sendGuardianChatMessage() {
     const inp = document.getElementById('guardian-chat-input');
     const txt = inp.value.trim();
@@ -2016,146 +1537,79 @@
     const chat = document.getElementById('guardian-chat-messages');
     const div = document.createElement('div');
     div.className = "flex items-end justify-end space-x-1.5 ml-auto max-w-[85%] anim-bubble-in";
-    div.innerHTML = `
-      <div class="bg-primary text-white rounded-2xl p-2 shadow-xs">
-        <p class="text-[10.5px]">${txt}</p>
-        <span class="text-[7.5px] text-white/80 block text-right">Just now ✓✓</span>
-      </div>
-    `;
+    div.innerHTML = `<div class="bg-primary text-white rounded-2xl p-2 shadow-xs"><p class="text-[10.5px]">${txt}</p><span class="text-[7.5px] text-white/80 block text-right">Just now ✓✓</span></div>`;
     chat.appendChild(div);
     inp.value = '';
     chat.scrollTop = chat.scrollHeight;
   }
-
   function quickSendMessage(text) {
     const chat = document.getElementById('guardian-chat-messages');
     const div = document.createElement('div');
     div.className = "flex items-end justify-end space-x-1.5 ml-auto max-w-[85%] anim-bubble-in";
-    div.innerHTML = `
-      <div class="bg-primary text-white rounded-2xl p-2 shadow-xs">
-        <p class="text-[10.5px]">${text}</p>
-        <span class="text-[7.5px] text-white/80 block text-right">Just now ✓✓</span>
-      </div>
-    `;
+    div.innerHTML = `<div class="bg-primary text-white rounded-2xl p-2 shadow-xs"><p class="text-[10.5px]">${text}</p><span class="text-[7.5px] text-white/80 block text-right">Just now ✓✓</span></div>`;
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
   }
-
   function triggerSelfieUpload() {
     const preview = document.createElement('div');
     preview.id = 'selfie-preview-modal';
     preview.className = 'absolute inset-0 bg-black/80 backdrop-blur-xs z-[60] flex items-center justify-center p-6';
     preview.innerHTML = `
       <div class="bg-white rounded-3xl p-4 w-full max-w-xs shadow-2xl space-y-3 anim-pop-in">
-        <div class="text-center">
-          <span class="text-[8.5px] font-bold uppercase tracking-widest text-primary">Camera Preview</span>
-          <h3 class="font-serif font-bold text-neutral-900 text-sm mt-0.5">Send Selfie Check-in</h3>
-        </div>
+        <div class="text-center"><span class="text-[8.5px] font-bold uppercase tracking-widest text-primary">Camera Preview</span><h3 class="font-serif font-bold text-neutral-900 text-sm mt-0.5">Send Selfie Check-in</h3></div>
         <div class="relative w-full aspect-square rounded-2xl overflow-hidden border-2 border-dashed border-primary/40 bg-primary-subtle">
-          <img src="https://lh3.googleusercontent.com/aida/AEtjO1X4j1ZMY1A1r79r6CRXjxWdP2ymQOFtYOMyjf1lyJydS10AkQbMOH9ibv_aiDfe841D9Hhuw7ygvgxOPCWcLiSiUde8G88YsI4k5uYelwRh8zujXnGR9eZJA_09-SIdVlymofYNvEpoBcQmCcUaRPFegKs9bBkzUGHEoIZdJFbSLGtiFrNEFjPWA-O1YL6tqQyI9cE8itYJwwCV_LsF-mt3yushGkREIyoV19w9X9GLQgNZ4tjKdUilRBs" class="w-full h-full object-cover" alt="Selfie preview">
-          <div class="absolute top-2 left-2 bg-black/60 text-white text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span>
-            <span>LIVE</span>
-          </div>
-          <div class="absolute bottom-2 inset-x-2 bg-black/60 backdrop-blur text-white text-[9px] font-mono px-2 py-1 rounded-lg text-center">
-            35.0037° N, 135.7772° E • Kyoto
-          </div>
+          <img src="https://lh3.googleusercontent.com/aida/AEtjO1X4j1ZMY1A1r79r6CRXjxWdP2ymQOFtYOMyjf1lyJydS10AkQbMOH9ibv_aiDfe841D9Hhuw7ygvgxOPCWcLiSiUde8G88YsI4k5uYelwRh8zujXnGR9eZJA_09-SIdVlymofYNvEpoBcQmCcUaRPFegKs9bBkzUGHEoIZdJFbSLGtiFrNEFjPWA-O1YL6tqQyI9cE8itYJwwCV_LsF-mt3yushGkREIyoV19w9X9GLQgNZ4tjKdUilRBs" class="w-full h-full object-cover">
+          <div class="absolute top-2 left-2 bg-black/60 text-white text-[9px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1"><span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span><span>LIVE</span></div>
+          <div class="absolute bottom-2 inset-x-2 bg-black/60 backdrop-blur text-white text-[9px] font-mono px-2 py-1 rounded-lg text-center">35.0037° N, 135.7772° E • Kyoto</div>
         </div>
         <input type="text" id="selfie-caption" placeholder="Add a caption..." value="Reached safely! 📸" class="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-3 py-2 text-xs">
         <div class="flex gap-2">
           <button onclick="closeSelfiePreview()" class="flex-1 py-2.5 bg-neutral-100 text-neutral-700 font-bold text-xs rounded-xl">Cancel</button>
-          <button onclick="confirmSelfieSend()" class="btn-sweep flex-1 py-2.5 bg-primary text-white font-bold text-xs rounded-xl shadow-xs flex items-center justify-center space-x-1">
-            <span class="material-symbols-outlined text-sm">send</span>
-            <span>Send</span>
-          </button>
+          <button onclick="confirmSelfieSend()" class="btn-sweep flex-1 py-2.5 bg-primary text-white font-bold text-xs rounded-xl shadow-xs flex items-center justify-center space-x-1"><span class="material-symbols-outlined text-sm">send</span><span>Send</span></button>
         </div>
       </div>
     `;
     document.getElementById('mobile-viewport').appendChild(preview);
   }
-
-  function closeSelfiePreview() {
-    const el = document.getElementById('selfie-preview-modal');
-    if (el) el.remove();
-  }
-
+  function closeSelfiePreview() { const el = document.getElementById('selfie-preview-modal'); if (el) el.remove(); }
   function confirmSelfieSend() {
     const caption = document.getElementById('selfie-caption').value || 'Reached safely!';
     const chat = document.getElementById('guardian-chat-messages');
     const div = document.createElement('div');
     div.className = "flex items-end justify-end space-x-1.5 ml-auto max-w-[85%] anim-bubble-in";
-    div.innerHTML = `
-      <div class="bg-primary text-white rounded-2xl p-2 shadow-xs space-y-1">
-        <img src="https://lh3.googleusercontent.com/aida/AEtjO1X4j1ZMY1A1r79r6CRXjxWdP2ymQOFtYOMyjf1lyJydS10AkQbMOH9ibv_aiDfe841D9Hhuw7ygvgxOPCWcLiSiUde8G88YsI4k5uYelwRh8zujXnGR9eZJA_09-SIdVlymofYNvEpoBcQmCcUaRPFegKs9bBkzUGHEoIZdJFbSLGtiFrNEFjPWA-O1YL6tqQyI9cE8itYJwwCV_LsF-mt3yushGkREIyoV19w9X9GLQgNZ4tjKdUilRBs" class="w-40 h-32 rounded-xl object-cover border border-white/20"/>
-        <p class="text-[10px]">${caption}</p>
-        <p class="text-[9px] text-white/80 font-mono">📍 35.0037°N, 135.7772°E</p>
-        <span class="text-[7.5px] text-white/80 block text-right">Just now ✓✓</span>
-      </div>
-    `;
+    div.innerHTML = `<div class="bg-primary text-white rounded-2xl p-2 shadow-xs space-y-1"><img src="https://lh3.googleusercontent.com/aida/AEtjO1X4j1ZMY1A1r79r6CRXjxWdP2ymQOFtYOMyjf1lyJydS10AkQbMOH9ibv_aiDfe841D9Hhuw7ygvgxOPCWcLiSiUde8G88YsI4k5uYelwRh8zujXnGR9eZJA_09-SIdVlymofYNvEpoBcQmCcUaRPFegKs9bBkzUGHEoIZdJFbSLGtiFrNEFjPWA-O1YL6tqQyI9cE8itYJwwCV_LsF-mt3yushGkREIyoV19w9X9GLQgNZ4tjKdUilRBs" class="w-40 h-32 rounded-xl object-cover border border-white/20"><p class="text-[10px]">${caption}</p><p class="text-[9px] text-white/80 font-mono">📍 35.0037°N, 135.7772°E</p><span class="text-[7.5px] text-white/80 block text-right">Just now ✓✓</span></div>`;
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
     closeSelfiePreview();
-
     setTimeout(() => {
       const reply = document.createElement('div');
       reply.className = "flex items-start space-x-1.5 max-w-[85%] anim-bubble-in";
-      reply.innerHTML = `
-        <div class="w-6 h-6 rounded-full bg-amber-200 text-amber-900 text-[9px] font-bold flex items-center justify-center shrink-0">MT</div>
-        <div class="bg-white border border-neutral-200 rounded-2xl p-2 shadow-xs text-neutral-800">
-          <span class="text-[8.5px] font-bold text-primary block">Mei Tian (Sister)</span>
-          <p class="text-[10.5px]">So glad you arrived safely baby! ❤️</p>
-          <span class="text-[7.5px] text-neutral-400 block text-right">Just now</span>
-        </div>
-      `;
+      reply.innerHTML = `<div class="w-6 h-6 rounded-full bg-amber-200 text-amber-900 text-[9px] font-bold flex items-center justify-center shrink-0">MT</div><div class="bg-white border border-neutral-200 rounded-2xl p-2 shadow-xs text-neutral-800"><span class="text-[8.5px] font-bold text-primary block">Mei Tian (Sister)</span><p class="text-[10.5px]">So glad you arrived safely baby! ❤️</p><span class="text-[7.5px] text-neutral-400 block text-right">Just now</span></div>`;
       chat.appendChild(reply);
       chat.scrollTop = chat.scrollHeight;
     }, 1200);
   }
+  function openMontageReelViewer(day) { document.getElementById('montage-modal-title').innerText = `Day ${day} Photo Montage`; document.getElementById('montage-reel-modal').classList.remove('hidden'); }
+  function closeMontageReelViewer() { document.getElementById('montage-reel-modal').classList.add('hidden'); }
 
-  function openMontageReelViewer(day) {
-    document.getElementById('montage-modal-title').innerText = `Day ${day} Photo Montage`;
-    document.getElementById('montage-reel-modal').classList.remove('hidden');
-  }
-
-  function closeMontageReelViewer() {
-    document.getElementById('montage-reel-modal').classList.add('hidden');
-  }
-
-  /* ---------------- REGISTRATION ---------------- */
   function addAnotherContact() {
     const list = document.getElementById('guardian-contacts-list');
     const row = document.createElement('div');
     row.className = "bg-neutral-50 p-2.5 rounded-xl border border-neutral-200 space-y-1 anim-fade-up";
-    row.innerHTML = `
-      <span class="text-[9px] uppercase font-bold text-neutral-500">Contact #3 (Additional Guardian)</span>
-      <div class="grid grid-cols-2 gap-2">
-        <div>
-          <label class="text-[8.5px] font-bold text-neutral-400 uppercase block">Name & Kinship</label>
-          <input type="text" placeholder="e.g. Maya (Cousin)" class="w-full bg-white border border-neutral-200 rounded-lg px-2 py-1 text-xs text-neutral-800 font-medium"/>
-        </div>
-        <div>
-          <label class="text-[8.5px] font-bold text-neutral-400 uppercase block">Emergency Phone</label>
-          <input type="text" placeholder="+60 1x-xxx xxxx" class="w-full bg-white border border-neutral-200 rounded-lg px-2 py-1 text-xs text-neutral-800 font-medium"/>
-        </div>
-      </div>
-    `;
+    row.innerHTML = `<span class="text-[9px] uppercase font-bold text-neutral-500">Contact #3 (Additional Guardian)</span><div class="grid grid-cols-2 gap-2"><div><label class="text-[8.5px] font-bold text-neutral-400 uppercase block">Name &amp; Kinship</label><input type="text" placeholder="e.g. Maya (Cousin)" class="w-full bg-white border border-neutral-200 rounded-lg px-2 py-1 text-xs"/></div><div><label class="text-[8.5px] font-bold text-neutral-400 uppercase block">Emergency Phone</label><input type="text" placeholder="+60 1x-xxx xxxx" class="w-full bg-white border border-neutral-200 rounded-lg px-2 py-1 text-xs"/></div></div>`;
     list.appendChild(row);
   }
 
-  function openCreateTripModal() { document.getElementById('create-trip-modal').classList.remove('hidden'); }
+  function openCreateTripModal() { document.getElementById('create-trip-modal').classList.remove('hidden'); initializeInviteCode(); updateInviteSectionVisibility(); }
   function closeCreateTripModal() { document.getElementById('create-trip-modal').classList.add('hidden'); }
 
   function setTripMode(mode) {
     tripMode = mode;
     const g = document.getElementById('mode-group-btn');
     const s = document.getElementById('mode-solo-btn');
-    if (mode === 'group') {
-      g.className = "py-2 rounded-xl text-[10.5px] font-bold bg-primary text-white transition-all";
-      s.className = "py-2 rounded-xl text-[10.5px] font-bold bg-neutral-100 text-neutral-700 transition-all";
-    } else {
-      s.className = "py-2 rounded-xl text-[10.5px] font-bold bg-primary text-white transition-all";
-      g.className = "py-2 rounded-xl text-[10.5px] font-bold bg-neutral-100 text-neutral-700 transition-all";
-    }
+    if (mode === 'group') { g.className = "py-2 rounded-xl text-[10.5px] font-bold bg-primary text-white transition-all"; s.className = "py-2 rounded-xl text-[10.5px] font-bold bg-neutral-100 text-neutral-700 transition-all"; }
+    else { s.className = "py-2 rounded-xl text-[10.5px] font-bold bg-primary text-white transition-all"; g.className = "py-2 rounded-xl text-[10.5px] font-bold bg-neutral-100 text-neutral-700 transition-all"; }
+    updateInviteSectionVisibility();
   }
 
   function switchCreateUploader(n) {
@@ -2172,32 +1626,11 @@
   }
 
   function toggleSpotAdd(btn, spotName) {
-    if (btn.innerText.includes('✓')) {
-      btn.innerText = "+ Add Spot";
-      btn.className = "bg-white border border-primary/40 text-primary font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs hover:bg-primary hover:text-white transition-all";
-    } else {
-      btn.innerText = "✓ Added";
-      btn.className = "bg-primary text-white font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs transition-all";
-    }
+    if (btn.innerText.includes('✓')) { btn.innerText = "+ Add Spot"; btn.className = "bg-white border border-primary/40 text-primary font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs hover:bg-primary hover:text-white transition-all"; }
+    else { btn.innerText = "✓ Added"; btn.className = "bg-primary text-white font-bold text-[9.5px] px-2.5 py-1 rounded-lg shadow-xs"; }
   }
-
-  function addSpotToDeckFromInput() {
-    const val = document.getElementById('cup-search-input').value.trim();
-    if (!val) return;
-    alert(`Added "${val}" to your trip voting queue!`);
-    document.getElementById('cup-search-input').value = '';
-  }
-
-  function fillAndExtractLink(url) {
-    document.getElementById('cup-link-input').value = url;
-    parseCustomLink();
-  }
-
-  function parseCustomLink() {
-    const val = document.getElementById('cup-link-input').value;
-    alert(`Successfully extracted attraction metadata from: ${val}`);
-  }
-
+  function addSpotToDeckFromInput() { const val = document.getElementById('cup-search-input').value.trim(); if (!val) return; alert(`Added "${val}" to your trip voting queue!`); document.getElementById('cup-search-input').value = ''; }
+  function parseCustomLink() { const val = document.getElementById('cup-link-input').value; alert(`Successfully extracted attraction metadata from: ${val}`); }
   function launchQueuedTrip() {
     closeCreateTripModal();
     navigateTo('view-trip-hub');
@@ -2205,56 +1638,92 @@
     setTimeout(() => updateSwipeLabels(), 100);
   }
 
-  /* ---------------- COMMUNITY INSPECTOR ---------------- */
+  function generateInviteCode() { return `RYOKO-${Math.floor(100 + Math.random() * 900)}`; }
+  function initializeInviteCode() { const code = generateInviteCode(); const el = document.getElementById('trip-invite-code'); if (el) el.innerText = code; return code; }
+  function copyInviteCode() {
+    const code = document.getElementById('trip-invite-code').innerText;
+    const btnLabel = document.getElementById('copy-btn-label');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(() => { btnLabel.innerText = 'Copied!'; setTimeout(() => { btnLabel.innerText = 'Copy Code'; }, 1500); }).catch(() => fallbackCopy(code, btnLabel));
+    } else { fallbackCopy(code, btnLabel); }
+  }
+  function fallbackCopy(text, btnLabel) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text; textarea.style.position = 'fixed'; textarea.style.opacity = '0';
+    document.body.appendChild(textarea); textarea.select();
+    try { document.execCommand('copy'); btnLabel.innerText = 'Copied!'; setTimeout(() => { btnLabel.innerText = 'Copy Code'; }, 1500); } catch (e) { alert('Copy failed.'); }
+    document.body.removeChild(textarea);
+  }
+  function shareInviteCode() {
+    const code = document.getElementById('trip-invite-code').innerText;
+    const shareText = `Join my trip on Ryokō! Use invite code: ${code}\n\n${window.location.origin}`;
+    if (navigator.share) { navigator.share({ title: 'Join my Ryokō trip', text: shareText, url: window.location.origin }).catch(() => {}); }
+    else { copyInviteCode(); showToast('Code copied! Paste to friends.'); }
+  }
+  const invitedMembers = [];
+  function sendDirectInvite() {
+    const input = document.getElementById('invite-by-input');
+    const value = input.value.trim();
+    if (!value) return;
+    if (invitedMembers.includes(value.toLowerCase())) { alert('Already invited!'); return; }
+    invitedMembers.push(value.toLowerCase());
+    const list = document.getElementById('invited-list');
+    const div = document.createElement('div');
+    div.className = "flex items-center justify-between bg-primary-subtle/50 border border-primary/20 rounded-lg p-2 anim-fade-up";
+    div.innerHTML = `<span class="text-[10px] text-neutral-700 truncate">${escapeHtml(value)}</span><span class="text-[8.5px] bg-tertiary text-white font-bold px-2 py-0.5 rounded-full">Invite Sent ✓</span>`;
+    list.appendChild(div);
+    input.value = '';
+  }
+  function openJoinTripModal() { document.getElementById('join-trip-modal').classList.remove('hidden'); document.getElementById('join-code-input').value = ''; document.getElementById('join-error').classList.add('hidden'); setTimeout(() => document.getElementById('join-code-input').focus(), 300); }
+  function closeJoinTripModal() { document.getElementById('join-trip-modal').classList.add('hidden'); }
+  function formatJoinCode(input) { input.value = input.value.toUpperCase().replace(/[^A-Z0-9-]/g, ''); }
+  function fillDemoCode(code) { document.getElementById('join-code-input').value = code; document.getElementById('join-error').classList.add('hidden'); }
+  function validateAndJoin() {
+    const code = document.getElementById('join-code-input').value.trim().toUpperCase();
+    const errorBox = document.getElementById('join-error');
+    const errorText = document.getElementById('join-error-text');
+    if (!code) { errorText.innerText = 'Please enter an invite code.'; errorBox.classList.remove('hidden'); return; }
+    if (code.length < 5) { errorText.innerText = 'Invite codes are at least 5 characters.'; errorBox.classList.remove('hidden'); return; }
+    if (code.startsWith('RYOKO-')) {
+      errorBox.classList.add('hidden');
+      const btn = document.querySelector('#join-trip-modal button[onclick="validateAndJoin()"]');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = `<span class="material-symbols-outlined text-sm">check_circle</span><span>Joined! Opening trip...</span>`;
+      btn.classList.add('bg-tertiary');
+      setTimeout(() => { closeJoinTripModal(); btn.innerHTML = originalText; btn.classList.remove('bg-tertiary'); navigateTo('view-trip-hub'); switchHubTool('decide'); }, 1400);
+    } else {
+      errorText.innerText = `Code "${code}" not found. Try RYOKO-482 for demo.`;
+      errorBox.classList.remove('hidden');
+      document.getElementById('join-code-input').classList.add('border-red-400');
+      setTimeout(() => document.getElementById('join-code-input').classList.remove('border-red-400'), 1500);
+    }
+  }
+  function updateInviteSectionVisibility() { const section = document.getElementById('invite-code-section'); if (!section) return; if (tripMode === 'group') section.classList.remove('hidden'); else section.classList.add('hidden'); }
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = "absolute top-20 left-1/2 -translate-x-1/2 bg-neutral-900 text-white text-[11px] font-bold px-4 py-2.5 rounded-full shadow-lg z-[100] anim-fade-down";
+    toast.innerText = message;
+    document.getElementById('mobile-viewport').appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 300ms'; setTimeout(() => toast.remove(), 300); }, 2500);
+  }
+
   const communityTrips = [
     {
-      title: "Kyoto Autumn Odyssey",
-      totalBadge: "RM 4,350 total",
-      hostName: "Michelle",
-      hostMeta: "4 companions • 5 days • Oct 14–18, 2025",
+      title: "Kyoto Autumn Odyssey", totalBadge: "RM 4,350 total", hostName: "Michelle", hostMeta: "4 companions • 5 days • Oct 14–18, 2025",
       hostAvatar: "https://lh3.googleusercontent.com/aida/AEtjO1X4j1ZMY1A1r79r6CRXjxWdP2ymQOFtYOMyjf1lyJydS10AkQbMOH9ibv_aiDfe841D9Hhuw7ygvgxOPCWcLiSiUde8G88YsI4k5uYelwRh8zujXnGR9eZJA_09-SIdVlymofYNvEpoBcQmCcUaRPFegKs9bBkzUGHEoIZdJFbSLGtiFrNEFjPWA-O1YL6tqQyI9cE8itYJwwCV_LsF-mt3yushGkREIyoV19w9X9GLQgNZ4tjKdUilRBs",
-      photos: [
-        "https://lh3.googleusercontent.com/aida/AEtjO1V9UMo51Ixi0743hcV17TXv9Cme59YUa-9hPFhsRNMkrOo981INp4e2Eij_QpZ_f5Oy0_QvhoogxsRyV-7AIHR074wovHPx9h0kHjJRyWKvfMJaXeUIuSYe50pGqjk9QxjQUl-xOgC8IeS9UP_wYpN9qXmfMkkuSkbb3j1QWLcb8F8BTYKw10h2u_j_TIvaeWnish9y64NRDg77rlMwnM-Qkqqc3Ao4adoTgb0miMyZ3b1OwwUVzuoGwTkM",
-        "https://lh3.googleusercontent.com/aida/AEtjO1UCKvCLAUlLoEc1llYOchCJMR5eA8zBDzwSSOI8tCfRF_YpOnopUZ00hyW5tUa2NVpe9Vzth1Ns5nwvOaeOCXZPSGGeeJBSEDMw9dFtG8WA727VP_LWAnUGeyPsdIxlm5Ncab6GZwp2DVYO2s9oylG-rjklObZx0RjeVw4HsV9rPwYoJM_rDMJ4WJwvfg83qG-yOjBxej6qpyWtbe5Yi5OAamiZwrY_vqg9tEH8W9-_qIvQOyVaAIHZIagi",
-        "https://lh3.googleusercontent.com/aida/AEtjO1Uz358tSe3K4fxft3d0NpN89nkz9b6LPR2qgfAOkfmQ8LJFVyHR3TPYvbBLriauwUM_BmkzuLGRfgN_qy2aAu_vjTFNdW4FhU6JHkL9ogplRpVJ40IXMVb-NpbZ-C4i4Fr8A3k5iZFdOuU-JtHJgwpfBSAlxhLSR0Cc1MzgUUoKa5YenWa_vuT1hIrmubqgGSizGM7en7NRqIgxU8a15y22rqKxV4_flBhPI6JWRIJVP-5mPTUDmN7OFw4Y"
-      ],
-      costs: { stay: "RM 1,800", food: "RM 1,200", activities: "RM 850", transport: "RM 500" },
-      split: "RM 1,087.50",
-      hotel: {
-        name: "Sowaka Ryokan",
-        meta: "Higashiyama • 4 nights • ★ 4.9",
-        img: "https://lh3.googleusercontent.com/aida/AEtjO1WAb5JuOMnIjUXW0xyEvS22ckwN7z8Lz_9iXmq-MQPRa4MAC-mYKmMPPj6x5PR3ycqV9SGCLQvWhkN-TYwUhEHyJUA_eXMHBTUFtk7CU4xHzAiTpug5VMnYvRaa4WYmqL6kBYj9Z-8mRPMf5Vk70dqSuFOIMQ7z-WfKXiEz-Z4oM-9GZ7Jdilo0wRjUBPE6gEVbhRPCNMLQ39fdN6XI_cwrBuljCstC60WnRKLtN3dKlJS5nD7CFNuRTUNt"
-      },
-      itinerary: [
-        { day: "Day 1", text: "Arashiyama Bamboo Grove (8:30am) → Tenryu-ji" },
-        { day: "Day 2", text: "Honke Owariya Soba → Gion walk → Tea ceremony" },
-        { day: "Day 3", text: "Fushimi Inari → Nishiki Market → Pontocho dinner" }
-      ],
+      photos: ["https://lh3.googleusercontent.com/aida/AEtjO1V9UMo51Ixi0743hcV17TXv9Cme59YUa-9hPFhsRNMkrOo981INp4e2Eij_QpZ_f5Oy0_QvhoogxsRyV-7AIHR074wovHPx9h0kHjJRyWKvfMJaXeUIuSYe50pGqjk9QxjQUl-xOgC8IeS9UP_wYpN9qXmfMkkuSkbb3j1QWLcb8F8BTYKw10h2u_j_TIvaeWnish9y64NRDg77rlMwnM-Qkqqc3Ao4adoTgb0miMyZ3b1OwwUVzuoGwTkM","https://lh3.googleusercontent.com/aida/AEtjO1UCKvCLAUlLoEc1llYOchCJMR5eA8zBDzwSSOI8tCfRF_YpOnopUZ00hyW5tUa2NVpe9Vzth1Ns5nwvOaeOCXZPSGGeeJBSEDMw9dFtG8WA727VP_LWAnUGeyPsdIxlm5Ncab6GZwp2DVYO2s9oylG-rjklObZx0RjeVw4HsV9rPwYoJM_rDMJ4WJwvfg83qG-yOjBxej6qpyWtbe5Yi5OAamiZwrY_vqg9tEH8W9-_qIvQOyVaAIHZIagi","https://lh3.googleusercontent.com/aida/AEtjO1Uz358tSe3K4fxft3d0NpN89nkz9b6LPR2qgfAOkfmQ8LJFVyHR3TPYvbBLriauwUM_BmkzuLGRfgN_qy2aAu_vjTFNdW4FhU6JHkL9ogplRpVJ40IXMVb-NpbZ-C4i4Fr8A3k5iZFdOuU-JtHJgwpfBSAlxhLSR0Cc1MzgUUoKa5YenWa_vuT1hIrmubqgGSizGM7en7NRqIgxU8a15y22rqKxV4_flBhPI6JWRIJVP-5mPTUDmN7OFw4Y"],
+      costs: { stay: "RM 1,800", food: "RM 1,200", activities: "RM 850", transport: "RM 500" }, split: "RM 1,087.50",
+      hotel: { name: "Sowaka Ryokan", meta: "Higashiyama • 4 nights • ★ 4.9", img: "https://lh3.googleusercontent.com/aida/AEtjO1WAb5JuOMnIjUXW0xyEvS22ckwN7z8Lz_9iXmq-MQPRa4MAC-mYKmMPPj6x5PR3ycqV9SGCLQvWhkN-TYwUhEHyJUA_eXMHBTUFtk7CU4xHzAiTpug5VMnYvRaa4WYmqL6kBYj9Z-8mRPMf5Vk70dqSuFOIMQ7z-WfKXiEz-Z4oM-9GZ7Jdilo0wRjUBPE6gEVbhRPCNMLQ39fdN6XI_cwrBuljCstC60WnRKLtN3dKlJS5nD7CFNuRTUNt" },
+      itinerary: [ { day: "Day 1", text: "Arashiyama Bamboo Grove (8:30am) → Tenryu-ji" }, { day: "Day 2", text: "Honke Owariya Soba → Gion walk → Tea ceremony" }, { day: "Day 3", text: "Fushimi Inari → Nishiki Market → Pontocho dinner" } ],
       note: "The bamboo grove at 8am was magic. Book Sowaka early — it sells out months ahead. Total spend landed right at budget thanks to Ryokō's split engine."
     },
     {
-      title: "Tokyo Neon Run",
-      totalBadge: "RM 5,120 total",
-      hostName: "Hannah Tiong",
-      hostMeta: "4 companions • 4 days • Nov 2–6, 2025",
+      title: "Tokyo Neon Run", totalBadge: "RM 5,120 total", hostName: "Hannah Tiong", hostMeta: "4 companions • 4 days • Nov 2–6, 2025",
       hostAvatar: "https://lh3.googleusercontent.com/aida/AEtjO1X4j1ZMY1A1r79r6CRXjxWdP2ymQOFtYOMyjf1lyJydS10AkQbMOH9ibv_aiDfe841D9Hhuw7ygvgxOPCWcLiSiUde8G88YsI4k5uYelwRh8zujXnGR9eZJA_09-SIdVlymofYNvEpoBcQmCcUaRPFegKs9bBkzUGHEoIZdJFbSLGtiFrNEFjPWA-O1YL6tqQyI9cE8itYJwwCV_LsF-mt3yushGkREIyoV19w9X9GLQgNZ4tjKdUilRBs",
-      photos: [
-        "https://lh3.googleusercontent.com/aida/AEtjO1WAb5JuOMnIjUXW0xyEvS22ckwN7z8Lz_9iXmq-MQPRa4MAC-mYKmMPPj6x5PR3ycqV9SGCLQvWhkN-TYwUhEHyJUA_eXMHBTUFtk7CU4xHzAiTpug5VMnYvRaa4WYmqL6kBYj9Z-8mRPMf5Vk70dqSuFOIMQ7z-WfKXiEz-Z4oM-9GZ7Jdilo0wRjUBPE6gEVbhRPCNMLQ39fdN6XI_cwrBuljCstC60WnRKLtN3dKlJS5nD7CFNuRTUNt",
-        "https://lh3.googleusercontent.com/aida/AEtjO1V9UMo51Ixi0743hcV17TXv9Cme59YUa-9hPFhsRNMkrOo981INp4e2Eij_QpZ_f5Oy0_QvhoogxsRyV-7AIHR074wovHPx9h0kHjJRyWKvfMJaXeUIuSYe50pGqjk9QxjQUl-xOgC8IeS9UP_wYpN9qXmfMkkuSkbb3j1QWLcb8F8BTYKw10h2u_j_TIvaeWnish9y64NRDg77rlMwnM-Qkqqc3Ao4adoTgb0miMyZ3b1OwwUVzuoGwTkM",
-        "https://lh3.googleusercontent.com/aida/AEtjO1UCKvCLAUlLoEc1llYOchCJMR5eA8zBDzwSSOI8tCfRF_YpOnopUZ00hyW5tUa2NVpe9Vzth1Ns5nwvOaeOCXZPSGGeeJBSEDMw9dFtG8WA727VP_LWAnUGeyPsdIxlm5Ncab6GZwp2DVYO2s9oylG-rjklObZx0RjeVw4HsV9rPwYoJM_rDMJ4WJwvfg83qG-yOjBxej6qpyWtbe5Yi5OAamiZwrY_vqg9tEH8W9-_qIvQOyVaAIHZIagi"
-      ],
-      costs: { stay: "RM 2,200", food: "RM 1,400", activities: "RM 1,020", transport: "RM 500" },
-      split: "RM 1,280.00",
-      hotel: {
-        name: "Trunk Hotel Shibuya",
-        meta: "Shibuya • 3 nights • ★ 4.7",
-        img: "https://lh3.googleusercontent.com/aida/AEtjO1Uz358tSe3K4fxft3d0NpN89nkz9b6LPR2qgfAOkfmQ8LJFVyHR3TPYvbBLriauwUM_BmkzuLGRfgN_qy2aAu_vjTFNdW4FhU6JHkL9ogplRpVJ40IXMVb-NpbZ-C4i4Fr8A3k5iZFdOuU-JtHJgwpfBSAlxhLSR0Cc1MzgUUoKa5YenWa_vuT1hIrmubqgGSizGM7en7NRqIgxU8a15y22rqKxV4_flBhPI6JWRIJVP-5mPTUDmN7OFw4Y"
-      },
-      itinerary: [
-        { day: "Day 1", text: "Shibuya Scramble → teamLab Planets → Ramen Street" },
-        { day: "Day 2", text: "Tsukiji Outer Market (dawn) → Ginza → Tokyo Tower" },
-        { day: "Day 3", text: "Meiji Shrine → Harajuku → Shinjuku Omoide Yokocho" }
-      ],
+      photos: ["https://lh3.googleusercontent.com/aida/AEtjO1WAb5JuOMnIjUXW0xyEvS22ckwN7z8Lz_9iXmq-MQPRa4MAC-mYKmMPPj6x5PR3ycqV9SGCLQvWhkN-TYwUhEHyJUA_eXMHBTUFtk7CU4xHzAiTpug5VMnYvRaa4WYmqL6kBYj9Z-8mRPMf5Vk70dqSuFOIMQ7z-WfKXiEz-Z4oM-9GZ7Jdilo0wRjUBPE6gEVbhRPCNMLQ39fdN6XI_cwrBuljCstC60WnRKLtN3dKlJS5nD7CFNuRTUNt","https://lh3.googleusercontent.com/aida/AEtjO1V9UMo51Ixi0743hcV17TXv9Cme59YUa-9hPFhsRNMkrOo981INp4e2Eij_QpZ_f5Oy0_QvhoogxsRyV-7AIHR074wovHPx9h0kHjJRyWKvfMJaXeUIuSYe50pGqjk9QxjQUl-xOgC8IeS9UP_wYpN9qXmfMkkuSkbb3j1QWLcb8F8BTYKw10h2u_j_TIvaeWnish9y64NRDg77rlMwnM-Qkqqc3Ao4adoTgb0miMyZ3b1OwwUVzuoGwTkM","https://lh3.googleusercontent.com/aida/AEtjO1UCKvCLAUlLoEc1llYOchCJMR5eA8zBDzwSSOI8tCfRF_YpOnopUZ00hyW5tUa2NVpe9Vzth1Ns5nwvOaeOCXZPSGGeeJBSEDMw9dFtG8WA727VP_LWAnUGeyPsdIxlm5Ncab6GZwp2DVYO2s9oylG-rjklObZx0RjeVw4HsV9rPwYoJM_rDMJ4WJwvfg83qG-yOjBxej6qpyWtbe5Yi5OAamiZwrY_vqg9tEH8W9-_qIvQOyVaAIHZIagi"],
+      costs: { stay: "RM 2,200", food: "RM 1,400", activities: "RM 1,020", transport: "RM 500" }, split: "RM 1,280.00",
+      hotel: { name: "Trunk Hotel Shibuya", meta: "Shibuya • 3 nights • ★ 4.7", img: "https://lh3.googleusercontent.com/aida/AEtjO1Uz358tSe3K4fxft3d0NpN89nkz9b6LPR2qgfAOkfmQ8LJFVyHR3TPYvbBLriauwUM_BmkzuLGRfgN_qy2aAu_vjTFNdW4FhU6JHkL9ogplRpVJ40IXMVb-NpbZ-C4i4Fr8A3k5iZFdOuU-JtHJgwpfBSAlxhLSR0Cc1MzgUUoKa5YenWa_vuT1hIrmubqgGSizGM7en7NRqIgxU8a15y22rqKxV4_flBhPI6JWRIJVP-5mPTUDmN7OFw4Y" },
+      itinerary: [ { day: "Day 1", text: "Shibuya Scramble → teamLab Planets → Ramen Street" }, { day: "Day 2", text: "Tsukiji Outer Market (dawn) → Ginza → Tokyo Tower" }, { day: "Day 3", text: "Meiji Shrine → Harajuku → Shinjuku Omoide Yokocho" } ],
       note: "teamLab tickets sell out fast — book 3 weeks ahead. Tsukiji at 6am is worth the early alarm."
     }
   ];
@@ -2262,54 +1731,30 @@
   function openCommunityInspector(idx) {
     const trip = communityTrips[idx];
     if (!trip) return;
-
     document.getElementById('ci-title').innerText = trip.title;
     document.getElementById('ci-total-badge').innerText = trip.totalBadge;
     document.getElementById('ci-host-name').innerText = `Shared by ${trip.hostName}`;
     document.getElementById('ci-host-meta').innerText = trip.hostMeta;
     document.getElementById('ci-host-avatar').src = trip.hostAvatar;
-
     document.getElementById('ci-photo-1').src = trip.photos[0];
     document.getElementById('ci-photo-2').src = trip.photos[1];
     document.getElementById('ci-photo-3').src = trip.photos[2];
-
     document.getElementById('ci-cost-stay').innerText = trip.costs.stay;
     document.getElementById('ci-cost-food').innerText = trip.costs.food;
     document.getElementById('ci-cost-activities').innerText = trip.costs.activities;
     document.getElementById('ci-cost-transport').innerText = trip.costs.transport;
     document.getElementById('ci-split').innerText = trip.split;
-
     document.getElementById('ci-hotel-name').innerText = trip.hotel.name;
     document.getElementById('ci-hotel-meta').innerText = trip.hotel.meta;
     document.getElementById('ci-hotel-img').src = trip.hotel.img;
-
-    document.getElementById('ci-itinerary').innerHTML = trip.itinerary.map((item, i) => `
-      <div class="flex items-start space-x-2 bg-neutral-50 p-2 rounded-lg anim-fade-up" style="animation-delay: ${i * 60}ms;">
-        <span class="text-[9px] font-bold text-primary bg-primary-subtle px-2 py-0.5 rounded shrink-0">${item.day}</span>
-        <span class="text-neutral-700">${item.text}</span>
-      </div>
-    `).join('');
-
+    document.getElementById('ci-itinerary').innerHTML = trip.itinerary.map((item, i) => `<div class="flex items-start space-x-2 bg-neutral-50 p-2 rounded-lg anim-fade-up" style="animation-delay: ${i * 60}ms;"><span class="text-[9px] font-bold text-primary bg-primary-subtle px-2 py-0.5 rounded shrink-0">${item.day}</span><span class="text-neutral-700">${item.text}</span></div>`).join('');
     document.getElementById('ci-note').innerText = `"${trip.note}"`;
-
     document.getElementById('community-inspector-modal').classList.remove('hidden');
   }
+  function closeCommunityInspector() { document.getElementById('community-inspector-modal').classList.add('hidden'); }
+  function cloneTripToMyTrips() { alert('✅ Trip cloned to My Trips! All spots, budget template and hotel added.'); closeCommunityInspector(); }
+  function saveCommunityTrip() { alert('🔖 Saved to your wishlist!'); closeCommunityInspector(); }
 
-  function closeCommunityInspector() {
-    document.getElementById('community-inspector-modal').classList.add('hidden');
-  }
-
-  function cloneTripToMyTrips() {
-    alert('✅ Trip cloned to My Trips! All spots, budget template and hotel added.');
-    closeCommunityInspector();
-  }
-
-  function saveCommunityTrip() {
-    alert('🔖 Saved to your wishlist! You can revisit this trip anytime.');
-    closeCommunityInspector();
-  }
-
-  /* ---------------- INIT ---------------- */
   navigateTo('view-welcome');
 </script>
 
